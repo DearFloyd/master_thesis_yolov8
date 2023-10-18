@@ -1,0 +1,10 @@
+# dataset path
+train: /workspace/cv-docker/joey04.li/datasets/classroom_datasets_1006/images/train
+val: /workspace/cv-docker/joey04.li/datasets/classroom_datasets_1006/images/val
+test: /workspace/cv-docker/joey04.li/datasets/classroom_datasets_1006/images/test
+
+# number of classes
+nc: 6
+
+# class names
+names: ['listen', 'shelter', 'neutrality', 'phone', 'stand', 'write']

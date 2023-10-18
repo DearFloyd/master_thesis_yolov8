@@ -1,3 +1,12 @@
+dataset/images/
+dataset/labels/
+dataset/VOCdevkit
+runs/
+src_img/
+weights/
+*.csv
+项目视频百度云链接!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
