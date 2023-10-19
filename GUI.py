@@ -114,6 +114,7 @@ if __name__ == "__main__":
                 image_output = gr.Image()
             image_button = gr.Button("Flip", variant="primary")  # 这一行放在gr.Row()同级 这样Flip按钮就是垂直放在子组件下面
             image_button.click(flip_image, inputs=image_input, outputs=image_output)
+            
     gr.close_all() 
     demo.queue(concurrency_count=5)
     demo.launch()
