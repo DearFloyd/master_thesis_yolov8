@@ -24,6 +24,24 @@ def sepia(input_img):
     sepia_img /= sepia_img.max()
     return sepia_img
 
+def flip_text(x):
+    return x[::-1]
+
+def flip_image(x):
+    return np.fliplr(x)
+
+def detect(img):
+    return
+    if isinstance(img,str):
+        img = get_url_img(img) if img.startswith('http') else Image.open(img).convert('RGB')
+    result = model.predict(source=img)
+    if len(result[0].boxes.boxes)>0:
+        vis = plots.plot_detection(img,boxes=result[0].boxes.boxes,
+                     class_names=class_names, min_score=0.2)
+    else:
+        vis = img
+
+    return vis
 
 if __name__ == "__main__":
     # 接口创建函数
@@ -36,6 +54,66 @@ if __name__ == "__main__":
     # inputs=["text", "checkbox", gr.Slider(0, 100)],
     # # 按照处理程序设置输出组件
     # outputs=["text", "number"],)
-    demo = gr.Interface(sepia, gr.Image(shape=(200, 200)), "image")
+
+    # demo = gr.Interface(sepia, gr.Image(shape=(200, 200)), "image")
+
+    # # 多级tab组件
+    # with gr.Blocks() as demo:
+    #     #用markdown语法编辑输出一段话
+    #     gr.Markdown("Flip text or image files using this demo.")
+    #     # 设置tab选项卡
+    #     with gr.Tab("Flip Text"):
+    #         #Blocks特有组件，设置所有子组件按垂直排列
+    #         #垂直排列是默认情况，不加也没关系
+    #         with gr.Column():
+    #             text_input = gr.Textbox()
+    #             text_output = gr.Textbox()
+    #             text_button = gr.Button("Flip")
+    #     with gr.Tab("Flip Image"):
+    #         #Blocks特有组件，设置所有子组件按水平排列
+    #         with gr.Row():
+    #             image_input = gr.Image()
+    #             image_output = gr.Image()
+    #         image_button = gr.Button("Flip")  # 这一行放在gr.Row()同级 这样Flip按钮就是垂直放在子组件下面
+    #     #设置折叠内容
+    #     with gr.Accordion("Open for More!"):
+    #         gr.Markdown("Look at me...")
+    #     text_button.click(flip_text, inputs=text_input, outputs=text_output)
+    #     image_button.click(flip_image, inputs=image_input, outputs=image_output)
+    # demo.launch()   
+
     
-    demo.launch()   
+    # 目标检测
+    with gr.Blocks() as demo:
+        gr.Markdown("# 视频解析可视化")
+
+        with gr.Tab("视频解析"):
+            in_img = gr.Image(source='upload', type='pil', label='Input Image')
+            in_video = gr.Video(source='upload', label='Input Video')
+            button = gr.Button("执行检测", variant="primary")
+
+            gr.Markdown("## 预测输出")
+            out_img = gr.Image(type='pil')
+            button.click(detect,
+                        inputs=in_img, 
+                        outputs=out_img)
+
+        with gr.Tab("单图展示"):
+            #Blocks特有组件，设置所有子组件按垂直排列
+            #垂直排列是默认情况，不加也没关系
+            with gr.Column():
+                text_input = gr.Textbox()
+                text_output = gr.Textbox()
+                text_button = gr.Button("Flip", variant="primary")
+            text_button.click(flip_text, inputs=text_input, outputs=text_output)
+
+        with gr.Tab("大数据分析"):
+            #Blocks特有组件，设置所有子组件按水平排列
+            with gr.Row():
+                image_input = gr.Image(source='upload')
+                image_output = gr.Image()
+            image_button = gr.Button("Flip", variant="primary")  # 这一行放在gr.Row()同级 这样Flip按钮就是垂直放在子组件下面
+            image_button.click(flip_image, inputs=image_input, outputs=image_output)
+    gr.close_all() 
+    demo.queue(concurrency_count=5)
+    demo.launch()
