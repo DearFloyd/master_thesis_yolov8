@@ -88,7 +88,7 @@ CUDA_VISIBLE_DEVICES=1 python train.py --yaml ultralytics/models/v8/yolov8s-effi
 CUDA_VISIBLE_DEVICES=4 python train.py --yaml ultralytics/models/v8/yolov8s-swintransformer.yaml --data /workspace/cv-docker/joey04.li/datasets/yolov8-0927/dataset/classroom_data.yaml --workers 8 --batch 128 --name v8s-swintransformer_600ep_128bs_SGD --epochs 600
 CUDA_VISIBLE_DEVICES=1 python train.py --yaml ultralytics/models/v8/yolov8-efficientViT.yaml --data /workspace/cv-docker/joey04.li/datasets/yolov8-0927/dataset/classroom_data.yaml --workers 8 --batch 164 --name v8s-efficientViT_M1_600ep_164bs_SGD --epochs 600
 CUDA_VISIBLE_DEVICES=5 python train.py --yaml ultralytics/models/v8/yolov8-convnextv2.yaml --data /workspace/cv-docker/joey04.li/datasets/yolov8-0927/dataset/classroom_data.yaml --workers 8 --batch 164 --name convnextv2_base_600ep_164bs_SGD --epochs 600
-
+CUDA_VISIBLE_DEVICES=3 python train.py --weight weights/yolov8s.pt --yaml ultralytics/models/v8/yolov8s.yaml --data /workspace/cv-docker/joey04.li/datasets/yolov8-0927/dataset/classroom_data.yaml --workers 8 --batch 128 --name v8s_350ep_128bs_SGD_10.20datasets --epochs 350
 
 yolov8-efficientViT.yaml
 

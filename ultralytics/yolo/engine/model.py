@@ -108,7 +108,7 @@ class YOLO:
 
     def __call__(self, source=None, stream=False, **kwargs):
         """Calls the 'predict' function with given arguments to perform object detection."""
-        return self.predict(source, stream, **kwargs)
+        return self.predict(source=source, stream=stream, **kwargs)
 
     def __getattr__(self, attr):
         """Raises error if object has no requested attribute."""
