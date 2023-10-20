@@ -32,6 +32,14 @@ def convert_annotation(xmlpath, xmlname):
         res = []
         for obj in root.iter('object'):
             cls = obj.find('name').text
+            if cls == 'person':  # 标签中有笔误 应对性修正
+                cls = 'listen'
+            elif cls == 'stand ':
+                cls = 'stand'
+            elif cls == 'stend':
+                cls = 'stand'
+            elif cls == 'sheter':
+                cls = 'shelter'
             if cls not in classes:
                 classes.append(cls)
             cls_id = classes.index(cls)
@@ -47,9 +55,9 @@ def convert_annotation(xmlpath, xmlname):
 
 if __name__ == "__main__":
     postfix = 'jpg'
-    imgpath = 'VOCdevkit/JPEGImages'
-    xmlpath = 'VOCdevkit/Annotations'
-    txtpath = 'VOCdevkit/txt'
+    imgpath = '/workspace/cv-docker/joey04.li/datasets/datasets_1500+100/img_10.16_100'
+    xmlpath = '/workspace/cv-docker/joey04.li/datasets/datasets_1500+100/annotation_10.16_100'
+    txtpath = '/workspace/cv-docker/joey04.li/datasets/datasets_1500+100/annotation_10.20_yolo_format'
     
     if not os.path.exists(txtpath):
         os.makedirs(txtpath, exist_ok=True)

@@ -7,4 +7,4 @@ test: /workspace/cv-docker/joey04.li/datasets/classroom_datasets_1006/images/tes
 nc: 6
 
 # class names
-names: ['listen', 'shelter', 'neutrality', 'phone', 'stand', 'write']
+names: ['shelter', 'phone', 'listen', 'neutrality', 'write', 'stand']
