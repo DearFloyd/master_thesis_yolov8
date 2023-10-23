@@ -82,4 +82,12 @@ swintransformer_tiny_600ep_64bs_SGD
 convnextv2_base_600ep_36bs_SGD
 
 
-
+v8s_350ep_128bs_SGD_10.20datasets
+             Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:01<00:00,  1.67s/it]
+               all        151       8089      0.755      0.787       0.79      0.693
+            listen        151       4711       0.89      0.938      0.948      0.861
+           shelter        151        499      0.628      0.722      0.666        0.5
+        neutrality        151        344      0.607      0.592      0.603      0.533
+             phone        151       2208      0.809      0.854       0.87      0.751
+             stand        151        178      0.966      0.969      0.975      0.949
+             write        151        149      0.631      0.644      0.676      0.564
