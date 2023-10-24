@@ -11,20 +11,20 @@ def transformer_opt(opt):
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/yolov8-0927/runs/train/v8s_300ep_128bs_SGD/weights/best.pt', help='training model path')
+    parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/v8s_350ep_128bs_SGD_10.20datasets/weights/best.pt', help='training model path')
     parser.add_argument('--source', type=str, default='/workspace/cv-docker/joey04.li/datasets/video_data/10.22.mp4', help='source directory for images or videos')
     parser.add_argument('--conf', type=float, default=0.25, help='object confidence threshold for detection')
     parser.add_argument('--iou', type=float, default=0.7, help='intersection over union (IoU) threshold for NMS')
-    parser.add_argument('--mode', type=str, default='track', choices=['predict', 'track'], help='predict mode or track mode')
+    parser.add_argument('--mode', type=str, default='predict', choices=['predict', 'track'], help='predict mode or track mode')
     parser.add_argument('--project', type=str, default='runs/detect', help='project name')
-    parser.add_argument('--name', type=str, default='test_10_17', help='experiment name (project/name)')
+    parser.add_argument('--name', type=str, default='test_10_23', help='experiment name (project/name)')
     parser.add_argument('--show', action="store_true", help='show results if possible')
-    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/yolov8-0927/runs/detect/test_10_16/verbose.txt', help='save detail predict verbose results as .txt file')
+    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_23/verbose.txt', help='save detail predict verbose results as .txt file')
     parser.add_argument('--save_txt', action="store_true", help='save results as .txt file')
     parser.add_argument('--save_conf', action="store_true", help='save results with confidence scores')
     parser.add_argument('--show_labels', action="store_true", default=False, help='show object labels in plots')
     parser.add_argument('--show_conf', action="store_true", default=False, help='show object confidence scores in plots')
-    parser.add_argument('--vid_stride', type=int, default=15, help='video frame-rate stride')
+    parser.add_argument('--vid_stride', type=int, default=10, help='video frame-rate stride')
     parser.add_argument('--line_width', type=int, default=1, help='line width of the bounding boxes')
     parser.add_argument('--visualize', action="store_true", help='visualize model features')
     parser.add_argument('--augment', action="store_true", help='apply image augmentation to prediction sources')
@@ -33,7 +33,7 @@ def parse_opt():
     parser.add_argument('--retina_masks', action="store_true", help='use high-resolution segmentation masks')
     parser.add_argument('--boxes', action="store_true", default=True, help='Show boxes in segmentation predictions')
     parser.add_argument('--save', action="store_true", default=True, help='save result')
-    parser.add_argument('--tracker', type=str, default='/workspace/cv-docker/joey04.li/datasets/yolov8-0927/ultralytics/tracker/cfg/bytetrack.yaml', choices=['botsort.yaml', 'bytetrack.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml]')
+    parser.add_argument('--tracker', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/ultralytics/tracker/cfg/bytetrack.yaml', choices=['botsort.yaml', 'bytetrack.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml]')
     
     return parser.parse_known_args()[0]
 

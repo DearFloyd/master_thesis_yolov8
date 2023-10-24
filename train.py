@@ -50,7 +50,7 @@ def parse_opt():
     parser.add_argument('--save', type=str2bool, default='True', help='save train checkpoints and predict results')
     parser.add_argument('--save-period', type=int, default=-1, help='Save checkpoint every x epochs (disabled if < 1)')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
-    parser.add_argument('--seed', type=int, default=0, help='Global training seed')
+    parser.add_argument('--seed', type=int, default=1337, help='Global training seed')
     parser.add_argument('--deterministic', action="store_true", default=True, help='whether to enable deterministic mode')
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
