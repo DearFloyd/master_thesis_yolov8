@@ -11,15 +11,15 @@ def transformer_opt(opt):
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/v8s_350ep_128bs_SGD_10.20datasets/weights/best.pt', help='training model path')
+    parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/v8s_300ep_128bs_Adam_10.20datasets/weights/best.pt', help='training model path')
     parser.add_argument('--source', type=str, default='/workspace/cv-docker/joey04.li/datasets/video_data/10.22.mp4', help='source directory for images or videos')
     parser.add_argument('--conf', type=float, default=0.25, help='object confidence threshold for detection')
     parser.add_argument('--iou', type=float, default=0.7, help='intersection over union (IoU) threshold for NMS')
     parser.add_argument('--mode', type=str, default='predict', choices=['predict', 'track'], help='predict mode or track mode')
     parser.add_argument('--project', type=str, default='runs/detect', help='project name')
-    parser.add_argument('--name', type=str, default='test_10_23', help='experiment name (project/name)')
+    parser.add_argument('--name', type=str, default='test_10_24', help='experiment name (project/name)')
     parser.add_argument('--show', action="store_true", help='show results if possible')
-    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_23/verbose.txt', help='save detail predict verbose results as .txt file')
+    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt', help='save detail predict verbose results as .txt file')
     parser.add_argument('--save_txt', action="store_true", help='save results as .txt file')
     parser.add_argument('--save_conf', action="store_true", help='save results with confidence scores')
     parser.add_argument('--show_labels', action="store_true", default=False, help='show object labels in plots')
