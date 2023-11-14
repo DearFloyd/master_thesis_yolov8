@@ -10,7 +10,7 @@ from pandas import DataFrame
 LABLE_INDEX_MAP = {'frame':0, 'listen':1, 'shelter':2, 'neutrality':3, 'phone':4, 'stand':5, 'write':6}
 
 
-def info_analyse_to_dataframe(infer_info_path, outputpath='result_test11.csv'):
+def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv'):
     df = DataFrame(
         columns=['frame', 'listen', 'shelter', 'neutrality', 'phone', 'stand', 'write'],
     )
@@ -47,6 +47,10 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test11.csv'):
             df.loc[frame_idx] = data
     # df.set_index(['frame'], inplace=True)
     df.to_csv(outputpath, sep=',', index=False, header=True)
+
+
+def info_analyse_to_dataframe():
+    pass
 
 
 def analyse_visualization(data_path):
@@ -88,5 +92,5 @@ def analyse_visualization(data_path):
 if __name__ == "__main__":
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/yolov8-0927/runs/detect/test_10_16/verbose.txt'
     
-    # info_analyse_to_dataframe(infer_info_path)
-    analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')
+    info_analyse_to_dataframe(infer_info_path)
+    # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')

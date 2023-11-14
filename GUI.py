@@ -1,6 +1,8 @@
 import gradio as gr
 import numpy as np
-import time 
+import time
+import altair as alt
+import pandas as pd
 
 
 def greet1(name):
@@ -42,6 +44,8 @@ def detect(img):
         vis = img
 
     return vis
+
+
 
 if __name__ == "__main__":
     # 接口创建函数
@@ -148,7 +152,7 @@ if __name__ == "__main__":
             button.click(detect,
                         inputs=input_img, 
                         outputs=out_img)
-            
+
     gr.close_all() 
     demo.queue(concurrency_count=5)
     demo.launch()
