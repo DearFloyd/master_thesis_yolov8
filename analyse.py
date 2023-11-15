@@ -49,9 +49,27 @@ def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def info_analyse_to_dataframe():
-    pass
-
+def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_11_15.csv'):
+    df = DataFrame(
+        columns=['timesteps', 'action', 'count'],
+    )
+    with open(infer_info_path, 'r') as f:
+        lines = f.readlines(50000)
+        for line in tqdm(lines):
+            action_info = line.strip(' ').split(',')
+            timestep, actions = action_info[0], action_info[1:-1]  # 末尾为换行符
+            timestep = timestep.strip(' ').split(' ')[-1]
+            m, s = divmod(int(timestep), 60)
+            h, m = divmod(m, 60)
+            timestep = str(h) + ':' + str(m) + ':' + str(s)
+            for item in actions:
+                data = [0] * len(df.columns)
+                data[0] = timestep
+                item = item.strip(' ')
+                count, action = item.split(' ')
+                data[1], data[2] = action, count
+                df.loc[len(df)] = data
+    df.to_csv(outputpath, sep=',', index=False, header=True)
 
 def analyse_visualization(data_path):
     df = pd.read_csv(data_path)
@@ -90,7 +108,7 @@ def analyse_visualization(data_path):
 
 
 if __name__ == "__main__":
-    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/yolov8-0927/runs/detect/test_10_16/verbose.txt'
-    
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
+    # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_11_15/verbose.txt'
     info_analyse_to_dataframe(infer_info_path)
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')

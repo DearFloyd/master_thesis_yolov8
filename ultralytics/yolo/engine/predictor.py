@@ -154,7 +154,6 @@ class BasePredictor:
         log_string += '%gx%g ' % im.shape[2:]  # print string
         result = results[idx]
         log_string += result.verbose()  # 推理中附加上详细推理结果的地方
-        result.verbose()
         if verbose_path != None:
             with open(verbose_path, 'a') as f:  # 将详细推理结果写入一个txt中
                 # 时间戳记录格式一
