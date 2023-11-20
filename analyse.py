@@ -67,6 +67,18 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_11_15.csv
                 data[0] = timestep
                 item = item.strip(' ')
                 count, action = item.split(' ')
+                if 'listen' in action:
+                    action = 'listen'
+                elif 'shelter' in action:
+                    action = 'shelter'
+                elif 'neutrality' in action:
+                    action = 'neutrality'
+                elif 'phone' in action:
+                    action = 'phone'
+                elif 'stand' in action:
+                    action = 'stand'
+                elif 'write' in action:
+                    action = 'write'
                 data[1], data[2] = action, count
                 df.loc[len(df)] = data
     df.to_csv(outputpath, sep=',', index=False, header=True)
