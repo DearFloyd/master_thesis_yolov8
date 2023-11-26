@@ -120,7 +120,14 @@ def analyse_visualization(data_path):
 
 
 if __name__ == "__main__":
-    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
-    # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_11_15/verbose.txt'
+    # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_11_15/verbose.txt'
     info_analyse_to_dataframe(infer_info_path)
+    
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')
+    # source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
+    # source['timesteps'] = pd.to_datetime(source['timesteps'], format='%H:%M:%S')
+    # source['timesteps'] = pd.to_timedelta(source['timesteps'])
+    # source['timesteps'] = source['timesteps'].strftime("%H:%M:%S")
+    # source['timesteps'] = source['timesteps'].dt.time
+    # source.to_csv('result_test_11_15.csv', sep=',', index=False, header=True)
