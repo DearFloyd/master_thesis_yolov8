@@ -8,8 +8,10 @@ from ultralytics.yolo.utils import IterableSimpleNamespace, yaml_load
 from ultralytics.yolo.utils.checks import check_yaml
 
 from .trackers import BOTSORT, BYTETracker
+from .trackers.boxmot import *
 
-TRACKER_MAP = {'bytetrack': BYTETracker, 'botsort': BOTSORT}
+TRACKER_MAP = {'bytetrack': BYTETracker, 'botsort': BOTSORT,
+               'deepocsort': DeepOCSORT, 'hybirdsort': HybridSORT}
 
 
 def on_predict_start(predictor, persist=False):
@@ -27,7 +29,7 @@ def on_predict_start(predictor, persist=False):
         return
     tracker = check_yaml(predictor.args.tracker)
     cfg = IterableSimpleNamespace(**yaml_load(tracker))
-    assert cfg.tracker_type in ['bytetrack', 'botsort'], \
+    assert cfg.tracker_type in ['bytetrack', 'botsort', 'deepocsort', 'hybirdsort'], \
         f"Only support 'bytetrack' and 'botsort' for now, but got '{cfg.tracker_type}'"
     trackers = []
     for _ in range(predictor.dataset.bs):
