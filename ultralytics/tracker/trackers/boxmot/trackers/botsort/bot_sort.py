@@ -4,13 +4,13 @@ from collections import deque
 
 import numpy as np
 
-from boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
-from boxmot.motion.cmc.sof import SparseOptFlow
-from boxmot.motion.kalman_filters.adapters import BotSortKalmanFilterAdapter
-from boxmot.trackers.botsort.basetrack import BaseTrack, TrackState
-from boxmot.utils.matching import (embedding_distance, fuse_score,
+from ultralytics.tracker.trackers.boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
+from ultralytics.tracker.trackers.boxmot.motion.cmc.sof import SparseOptFlow
+from ultralytics.tracker.trackers.boxmot.motion.kalman_filters.adapters import BotSortKalmanFilterAdapter
+from ultralytics.tracker.trackers.boxmot.trackers.botsort.basetrack import BaseTrack, TrackState
+from ultralytics.tracker.trackers.boxmot.utils.matching import (embedding_distance, fuse_score,
                                    iou_distance, linear_assignment)
-from boxmot.utils.ops import xywh2xyxy, xyxy2xywh
+from ultralytics.tracker.trackers.boxmot.utils.ops import xywh2xyxy, xyxy2xywh
 
 
 class STrack(BaseTrack):

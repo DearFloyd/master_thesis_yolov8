@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 import torch
 
-from boxmot.utils import logger as LOGGER
+from ultralytics.tracker.trackers.boxmot.utils import logger as LOGGER
 
 __model_types = [
     "resnet50",

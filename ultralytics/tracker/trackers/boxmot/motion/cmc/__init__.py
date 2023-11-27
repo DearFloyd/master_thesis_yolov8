@@ -1,9 +1,9 @@
 # Mikel Broström 🔥 Yolo Tracking 🧾 AGPL-3.0 license
 
-from boxmot.motion.cmc.ecc import ECC
-from boxmot.motion.cmc.orb import ORB
-from boxmot.motion.cmc.sift import SIFT
-from boxmot.motion.cmc.sof import SparseOptFlow
+from ultralytics.tracker.trackers.boxmot.motion.cmc.ecc import ECC
+from ultralytics.tracker.trackers.boxmot.motion.cmc.orb import ORB
+from ultralytics.tracker.trackers.boxmot.motion.cmc.sift import SIFT
+from ultralytics.tracker.trackers.boxmot.motion.cmc.sof import SparseOptFlow
 
 
 def get_cmc_method(cmc_method):

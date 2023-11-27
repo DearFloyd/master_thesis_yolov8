@@ -17,9 +17,9 @@ def parse_opt():
     parser.add_argument('--iou', type=float, default=0.7, help='intersection over union (IoU) threshold for NMS')
     parser.add_argument('--mode', type=str, default='track', choices=['predict', 'track'], help='predict mode or track mode')
     parser.add_argument('--project', type=str, default='runs/detect', help='project name')
-    parser.add_argument('--name', type=str, default='test_11_24_bytetrack5_50fps', help='experiment name (project/name)')
+    parser.add_argument('--name', type=str, default='test_11_27', help='experiment name (project/name)')
     parser.add_argument('--show', action="store_true", help='show results if possible')
-    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_11_24_bytetrack5_50fps/verbose.txt', help='save detail predict verbose results as .txt file')
+    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_11_27/verbose.txt', help='save detail predict verbose results as .txt file')
     parser.add_argument('--save_txt', action="store_true", help='save results as .txt file')
     parser.add_argument('--save_conf', action="store_true", help='save results with confidence scores')
     parser.add_argument('--show_labels', action="store_true", default=False, help='show object labels in plots')
@@ -33,7 +33,7 @@ def parse_opt():
     parser.add_argument('--retina_masks', action="store_true", help='use high-resolution segmentation masks')
     parser.add_argument('--boxes', action="store_true", default=True, help='Show boxes in segmentation predictions')
     parser.add_argument('--save', action="store_true", default=True, help='save result')
-    parser.add_argument('--tracker', type=str, default='bytetrack.yaml', choices=['botsort.yaml', 'bytetrack.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml]')
+    parser.add_argument('--tracker', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/ultralytics/tracker/trackers/boxmot/configs/deepocsort.yaml', choices=['botsort.yaml', 'bytetrack.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml]')
     
     return parser.parse_known_args()[0]
 

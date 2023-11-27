@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from boxmot.motion.kalman_filters.adapters import StrongSortKalmanFilterAdapter
+from ultralytics.tracker.trackers.boxmot.motion.kalman_filters.adapters import StrongSortKalmanFilterAdapter
 
 
 class TrackState:

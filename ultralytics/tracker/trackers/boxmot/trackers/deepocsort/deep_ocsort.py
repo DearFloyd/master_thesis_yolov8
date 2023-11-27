@@ -6,11 +6,11 @@
 
 import numpy as np
 
-from boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
-from boxmot.motion.cmc import get_cmc_method
-from boxmot.motion.kalman_filters.adapters import OCSortKalmanFilterAdapter
-from boxmot.utils.association import associate, linear_assignment
-from boxmot.utils.iou import get_asso_func
+from ultralytics.tracker.trackers.boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
+from ultralytics.tracker.trackers.boxmot.motion.cmc import get_cmc_method
+from ultralytics.tracker.trackers.boxmot.motion.kalman_filters.adapters import OCSortKalmanFilterAdapter
+from ultralytics.tracker.trackers.boxmot.utils.association import associate, linear_assignment
+from ultralytics.tracker.trackers.boxmot.utils.iou import get_asso_func
 
 
 def k_previous_obs(observations, cur_age, k):

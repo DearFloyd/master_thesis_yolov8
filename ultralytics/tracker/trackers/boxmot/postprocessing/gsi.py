@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor as GPR
 from sklearn.gaussian_process.kernels import RBF
 
-from boxmot.utils import logger as LOGGER
+from ultralytics.tracker.trackers.boxmot.utils import logger as LOGGER
 
 
 def linear_interpolation(input_, interval):

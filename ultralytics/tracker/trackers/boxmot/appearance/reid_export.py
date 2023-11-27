@@ -10,14 +10,14 @@ from pathlib import Path
 import torch
 from torch.utils.mobile_optimizer import optimize_for_mobile
 
-from boxmot.appearance import export_formats
-from boxmot.appearance.backbones import build_model, get_nr_classes
-from boxmot.appearance.reid_model_factory import (get_model_name,
+from ultralytics.tracker.trackers.boxmot.appearance import export_formats
+from ultralytics.tracker.trackers.boxmot.appearance.backbones import build_model, get_nr_classes
+from ultralytics.tracker.trackers.boxmot.appearance.reid_model_factory import (get_model_name,
                                                   load_pretrained_weights)
-from boxmot.utils import WEIGHTS
-from boxmot.utils import logger as LOGGER
-from boxmot.utils.checks import TestRequirements
-from boxmot.utils.torch_utils import select_device
+from ultralytics.tracker.trackers.boxmot.utils import WEIGHTS
+from ultralytics.tracker.trackers.boxmot.utils import logger as LOGGER
+from ultralytics.tracker.trackers.boxmot.utils.checks import TestRequirements
+from ultralytics.tracker.trackers.boxmot.utils.torch_utils import select_device
 
 __tr = TestRequirements()
 

@@ -2,12 +2,12 @@
 
 import numpy as np
 
-from boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
-from boxmot.motion.cmc import get_cmc_method
-from boxmot.trackers.strongsort.sort.detection import Detection
-from boxmot.trackers.strongsort.sort.tracker import Tracker
-from boxmot.utils.matching import NearestNeighborDistanceMetric
-from boxmot.utils.ops import xyxy2tlwh
+from ultralytics.tracker.trackers.boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
+from ultralytics.tracker.trackers.boxmot.motion.cmc import get_cmc_method
+from ultralytics.tracker.trackers.boxmot.trackers.strongsort.sort.detection import Detection
+from ultralytics.tracker.trackers.boxmot.trackers.strongsort.sort.tracker import Tracker
+from ultralytics.tracker.trackers.boxmot.utils.matching import NearestNeighborDistanceMetric
+from ultralytics.tracker.trackers.boxmot.utils.ops import xyxy2tlwh
 
 
 class StrongSORT(object):

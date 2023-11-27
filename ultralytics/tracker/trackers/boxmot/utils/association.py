@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from boxmot.utils.iou import iou_batch
+from ultralytics.tracker.trackers.boxmot.utils.iou import iou_batch
 
 
 def speed_direction_batch(dets, tracks):

@@ -5,9 +5,9 @@ import time
 import cv2
 import numpy as np
 
-from boxmot.motion.cmc.cmc_interface import CMCInterface
-from boxmot.utils import BOXMOT
-from boxmot.utils import logger as LOGGER
+from ultralytics.tracker.trackers.boxmot.motion.cmc.cmc_interface import CMCInterface
+from ultralytics.tracker.trackers.boxmot.utils import BOXMOT
+from ultralytics.tracker.trackers.boxmot.utils import logger as LOGGER
 
 
 class ECC(CMCInterface):

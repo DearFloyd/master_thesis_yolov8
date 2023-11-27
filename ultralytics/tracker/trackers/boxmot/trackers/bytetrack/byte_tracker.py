@@ -2,10 +2,10 @@
 
 import numpy as np
 
-from boxmot.motion.kalman_filters.adapters import ByteTrackKalmanFilterAdapter
-from boxmot.trackers.bytetrack.basetrack import BaseTrack, TrackState
-from boxmot.utils.matching import fuse_score, iou_distance, linear_assignment
-from boxmot.utils.ops import tlwh2xyah, xywh2tlwh, xywh2xyxy, xyxy2xywh
+from ultralytics.tracker.trackers.boxmot.motion.kalman_filters.adapters import ByteTrackKalmanFilterAdapter
+from ultralytics.tracker.trackers.boxmot.trackers.bytetrack.basetrack import BaseTrack, TrackState
+from ultralytics.tracker.trackers.boxmot.utils.matching import fuse_score, iou_distance, linear_assignment
+from ultralytics.tracker.trackers.boxmot.utils.ops import tlwh2xyah, xywh2tlwh, xywh2xyxy, xyxy2xywh
 
 
 class STrack(BaseTrack):

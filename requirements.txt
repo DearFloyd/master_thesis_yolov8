@@ -17,6 +17,12 @@ efficientnet_pytorch
 einops
 pandas_alive
 plotly
+scikit-learn
+loguru
+gdown>=4.7.1
+ftfy>=6.1.1
+regex>=2023.6.3
+filterpy>=1.4.5         # OCSORT & DeepOCSORT
 
 # Logging -------------------------------------
 # tensorboard>=2.13.0

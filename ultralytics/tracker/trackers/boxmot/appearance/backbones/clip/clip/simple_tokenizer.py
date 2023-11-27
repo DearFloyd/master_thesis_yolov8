@@ -7,7 +7,7 @@ from functools import lru_cache
 import ftfy
 import regex as re
 
-from boxmot.utils import BOXMOT
+from ultralytics.tracker.trackers.boxmot.utils import BOXMOT
 
 
 @lru_cache()

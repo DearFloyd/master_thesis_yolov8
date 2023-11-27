@@ -8,13 +8,13 @@ from collections import deque  # [hgx0418] deque for reid feature
 
 import numpy as np
 
-from boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
-from boxmot.motion.cmc import get_cmc_method
-from boxmot.trackers.hybridsort.association import (
+from ultralytics.tracker.trackers.boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
+from ultralytics.tracker.trackers.boxmot.motion.cmc import get_cmc_method
+from ultralytics.tracker.trackers.boxmot.trackers.hybridsort.association import (
     associate_4_points_with_score, associate_4_points_with_score_with_reid,
     cal_score_dif_batch_two_score, embedding_distance, linear_assignment)
-from boxmot.utils import PerClassDecorator
-from boxmot.utils.iou import get_asso_func
+from ultralytics.tracker.trackers.boxmot.utils import PerClassDecorator
+from ultralytics.tracker.trackers.boxmot.utils.iou import get_asso_func
 
 np.random.seed(0)
 

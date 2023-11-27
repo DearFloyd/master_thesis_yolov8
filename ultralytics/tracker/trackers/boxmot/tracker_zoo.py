@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import yaml
 
-from boxmot.utils import BOXMOT
+from ultralytics.tracker.trackers.boxmot.utils import BOXMOT
 
 
 def get_tracker_config(tracker_type):

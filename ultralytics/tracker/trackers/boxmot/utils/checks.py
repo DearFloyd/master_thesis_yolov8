@@ -4,7 +4,7 @@ import subprocess
 
 import pkg_resources
 
-from boxmot.utils import REQUIREMENTS, logger
+from ultralytics.tracker.trackers.boxmot.utils import REQUIREMENTS, logger
 
 
 class TestRequirements():
