@@ -2,6 +2,7 @@ import argparse, warnings
 warnings.filterwarnings('ignore')
 from ultralytics import YOLO
 
+
 def transformer_opt(opt):
     opt = vars(opt)
     del opt['source']
@@ -34,7 +35,8 @@ def parse_opt():
     parser.add_argument('--boxes', action="store_true", default=True, help='Show boxes in segmentation predictions')
     parser.add_argument('--save', action="store_true", default=True, help='save result')
     parser.add_argument('--tracker', type=str, default='deepocsort.yaml', choices=['botsort.yaml', 'bytetrack.yaml', 'deepocsort.yaml', 'hybirdsort.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml, deepocsort.yaml, hybirdsort.yaml]')
-    
+    parser.add_argument('--reid_weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/yolo_tracking/examples/weights/osnet_x1_0_imagenet.pt', help='if tracker have reid, add reid model path')
+
     return parser.parse_known_args()[0]
 
 class YOLOV8(YOLO):
@@ -52,4 +54,24 @@ if __name__ == '__main__':
     if opt.mode == 'predict':
         model.predict(source=opt.source, verbose_path=verbose_path, **transformer_opt(opt))
     elif opt.mode == 'track':
-        model.track(source=opt.source, **transformer_opt(opt))
+        model.track(source=opt.source,
+                    tracker=opt.tracker,
+                    reid_weight=opt.reid_weight,
+                    # **transformer_opt(opt),
+                    conf=opt.conf,
+                    iou=opt.iou,
+                    show=opt.show,
+                    stream=False,
+                    # device=opt.device,
+                    show_conf=opt.show_conf,
+                    save_txt=opt.save_txt,
+                    show_labels=opt.show_labels,
+                    save=opt.save,
+                    # verbose=opt.verbose,
+                    # exist_ok=opt.exist_ok,
+                    project=opt.project,
+                    name=opt.name,
+                    classes=opt.classes,
+                    # imgsz=opt.imgsz,
+                    vid_stride=opt.vid_stride,
+                    line_width=opt.line_width)

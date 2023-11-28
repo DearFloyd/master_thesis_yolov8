@@ -258,7 +258,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--weights",
         type=Path,
-        default=WEIGHTS / "mobilenetv2_x1_4_dukemtmcreid.pt",
+        default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/weights/osnet_x1_0_market_256x128_amsgrad_ep150_stp60_lr0.0015_b64_fb10_softmax_labelsmooth_flip.pth',
         help="model.pt path(s)",
     )
     parser.add_argument(
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--include",
         nargs="+",
-        default=["torchscript"],
+        default=["onnx"],
         help="torchscript, onnx, openvino, engine",
     )
     args = parser.parse_args()
