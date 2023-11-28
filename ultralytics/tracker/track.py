@@ -1,6 +1,7 @@
 # Ultralytics YOLO 🚀, AGPL-3.0 license
 
 from functools import partial
+from pathlib import Path
 
 import torch
 
@@ -30,10 +31,13 @@ def on_predict_start(predictor, persist=False):
     tracker = check_yaml(predictor.args.tracker)
     cfg = IterableSimpleNamespace(**yaml_load(tracker))
     assert cfg.tracker_type in ['bytetrack', 'botsort', 'deepocsort', 'hybirdsort'], \
-        f"Only support 'bytetrack' and 'botsort' for now, but got '{cfg.tracker_type}'"
+        f"Only support 'bytetrack' 'botsort' 'deepocsort' and 'hybirdsort' for now, but got '{cfg.tracker_type}'"
     trackers = []
     for _ in range(predictor.dataset.bs):
-        tracker = TRACKER_MAP[cfg.tracker_type](args=cfg, frame_rate=30)
+        if cfg.tracker_type in ['deepocsort', 'hybirdsort']:
+            tracker = TRACKER_MAP[cfg.tracker_type](args=cfg, reid_weights=Path(cfg.reid_weights), frame_rate=30)
+        else:
+            tracker = TRACKER_MAP[cfg.tracker_type](args=cfg, frame_rate=30)
         trackers.append(tracker)
     predictor.trackers = trackers
 
@@ -43,7 +47,7 @@ def on_predict_postprocess_end(predictor):
     bs = predictor.dataset.bs
     im0s = predictor.batch[1]
     for i in range(bs):
-        det = predictor.results[i].boxes.cpu().numpy()
+        det = predictor.results[i].boxes.data.cpu().numpy()  # 输入到tracker的是ndarray
         if len(det) == 0:
             continue
         tracks = predictor.trackers[i].update(det, im0s[i])
