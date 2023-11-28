@@ -8,10 +8,10 @@ import torch
 from ultralytics.yolo.utils import IterableSimpleNamespace, yaml_load
 from ultralytics.yolo.utils.checks import check_yaml
 
-from .trackers import BOTSORT, BYTETracker
-from .trackers.boxmot import *
+# from ultralytics.tracker.trackers import BOTSORT, BYTETracker
+from ultralytics.tracker.trackers.boxmot import BoTSORT, BYTETracker, DeepOCSORT, HybridSORT, OCSORT
 
-TRACKER_MAP = {'bytetrack': BYTETracker, 'botsort': BOTSORT,
+TRACKER_MAP = {'bytetrack': BYTETracker, 'botsort': BoTSORT,
                'deepocsort': DeepOCSORT, 'hybirdsort': HybridSORT, 'ocsort':OCSORT}
 
 
@@ -34,10 +34,11 @@ def on_predict_start(predictor, persist=False):
         f"Only support 'bytetrack' 'botsort' 'deepocsort' 'hybirdsort' and 'ocsortfor now, but got '{cfg.tracker_type}'"
     trackers = []
     for _ in range(predictor.dataset.bs):
-        if cfg.tracker_type in ['deepocsort', 'hybirdsort']:
+        if cfg.tracker_type in ['botsort', 'deepocsort', 'hybirdsort']:
             tracker = TRACKER_MAP[cfg.tracker_type](args=cfg, reid_weights=Path(cfg.reid_weights), frame_rate=30)
         else:
             tracker = TRACKER_MAP[cfg.tracker_type](args=cfg, frame_rate=30)
+        print(f"current tracker is {cfg.tracker_type}")
         trackers.append(tracker)
     predictor.trackers = trackers
 
