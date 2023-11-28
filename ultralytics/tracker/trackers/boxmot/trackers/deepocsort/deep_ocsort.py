@@ -4,6 +4,7 @@
     This script is adopted from the SORT script by Alex Bewley alex@bewley.ai
 """
 
+import torch
 import numpy as np
 
 from ultralytics.tracker.trackers.boxmot.appearance.reid_multibackend import ReIDDetectMultiBackend
@@ -308,9 +309,9 @@ class KalmanBoxTracker(object):
 class DeepOCSort(object):
     def __init__(
         self,
-        model_weights,
-        device,
-        fp16,
+        reid_weights,
+        device=torch.device("cpu"),
+        fp16=False,
         per_class=True,
         det_thresh=0.3,
         max_age=30,
@@ -346,7 +347,7 @@ class DeepOCSort(object):
         self.per_class = per_class
         KalmanBoxTracker.count = 1
 
-        self.model = ReIDDetectMultiBackend(weights=model_weights, device=device, fp16=fp16)
+        self.model = ReIDDetectMultiBackend(weights=reid_weights, device=device, fp16=fp16)
         # "similarity transforms using feature point extraction, optical flow, and RANSAC"
         self.cmc = get_cmc_method('sof')()
         self.embedding_off = embedding_off
