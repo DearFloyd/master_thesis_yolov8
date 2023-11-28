@@ -34,7 +34,7 @@ def parse_opt():
     parser.add_argument('--retina_masks', action="store_true", help='use high-resolution segmentation masks')
     parser.add_argument('--boxes', action="store_true", default=True, help='Show boxes in segmentation predictions')
     parser.add_argument('--save', action="store_true", default=True, help='save result')
-    parser.add_argument('--tracker', type=str, default='deepocsort.yaml', choices=['botsort.yaml', 'bytetrack.yaml', 'deepocsort.yaml', 'hybirdsort.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml, deepocsort.yaml, hybirdsort.yaml]')
+    parser.add_argument('--tracker', type=str, default='ocsort.yaml', choices=['botsort.yaml', 'bytetrack.yaml', 'deepocsort.yaml', 'hybirdsort.yaml', 'ocsort.yaml'], help='tracker type, [botsort.yaml, bytetrack.yaml, deepocsort.yaml, hybirdsort.yaml, ocsort.yaml]')
     parser.add_argument('--reid_weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/yolo_tracking/examples/weights/osnet_x1_0_imagenet.pt', help='if tracker have reid, add reid model path')
 
     return parser.parse_known_args()[0]

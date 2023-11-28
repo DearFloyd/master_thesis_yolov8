@@ -189,6 +189,8 @@ class KalmanBoxTracker(object):
 class OCSort(object):
     def __init__(
         self,
+        args,
+        frame_rate=30,
         per_class=True,
         det_thresh=0.2,
         max_age=30,
@@ -202,6 +204,7 @@ class OCSort(object):
         """
         Sets key parameters for SORT
         """
+        self.args = args
         self.max_age = max_age
         self.min_hits = min_hits
         self.iou_threshold = iou_threshold

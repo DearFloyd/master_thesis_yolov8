@@ -12,7 +12,7 @@ from .trackers import BOTSORT, BYTETracker
 from .trackers.boxmot import *
 
 TRACKER_MAP = {'bytetrack': BYTETracker, 'botsort': BOTSORT,
-               'deepocsort': DeepOCSORT, 'hybirdsort': HybridSORT}
+               'deepocsort': DeepOCSORT, 'hybirdsort': HybridSORT, 'ocsort':OCSORT}
 
 
 def on_predict_start(predictor, persist=False):
@@ -30,8 +30,8 @@ def on_predict_start(predictor, persist=False):
         return
     tracker = check_yaml(predictor.args.tracker)
     cfg = IterableSimpleNamespace(**yaml_load(tracker))
-    assert cfg.tracker_type in ['bytetrack', 'botsort', 'deepocsort', 'hybirdsort'], \
-        f"Only support 'bytetrack' 'botsort' 'deepocsort' and 'hybirdsort' for now, but got '{cfg.tracker_type}'"
+    assert cfg.tracker_type in ['bytetrack', 'botsort', 'deepocsort', 'hybirdsort', 'ocsort'], \
+        f"Only support 'bytetrack' 'botsort' 'deepocsort' 'hybirdsort' and 'ocsortfor now, but got '{cfg.tracker_type}'"
     trackers = []
     for _ in range(predictor.dataset.bs):
         if cfg.tracker_type in ['deepocsort', 'hybirdsort']:

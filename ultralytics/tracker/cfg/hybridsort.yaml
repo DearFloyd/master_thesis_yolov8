@@ -1,4 +1,4 @@
-tracker_type: hybirdsort  # tracker type, ['botsort', 'bytetrack', 'deepocsort', 'hybirdsort']
+tracker_type: hybirdsort  # tracker type, ['botsort', 'bytetrack', 'deepocsort', 'hybirdsort', 'ocsort']
 asso_func: giou
 conf_thres: 0.5122620708221085
 delta_t: 3

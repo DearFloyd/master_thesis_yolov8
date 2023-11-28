@@ -1,6 +1,6 @@
 # Trial number:      0
 # HOTA, MOTA, IDF1:  [27.884, 11.425, 21.545]
-tracker_type: deepocsort  # tracker type, ['botsort', 'bytetrack', 'deepocsort', 'hybirdsort']
+tracker_type: deepocsort  # tracker type, ['botsort', 'bytetrack', 'deepocsort', 'hybirdsort', 'ocsort']
 reid_weights: /workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/weights/osnet_x1_0_imagenet.pt
 alpha_fixed_emb: 0.95
 asso_func: giou

@@ -309,8 +309,9 @@ class KalmanBoxTracker(object):
 class DeepOCSort(object):
     def __init__(
         self,
+        args,
         reid_weights,
-        device=torch.device("cpu"),
+        device=torch.device("cuda"),
         fp16=False,
         per_class=True,
         det_thresh=0.3,
@@ -327,11 +328,13 @@ class DeepOCSort(object):
         cmc_off=False,
         aw_off=False,
         new_kf_off=False,
+        frame_rate=30,
         **kwargs
     ):
         """
         Sets key parameters for SORT
         """
+        self.args = args
         self.max_age = max_age
         self.min_hits = min_hits
         self.iou_threshold = iou_threshold
