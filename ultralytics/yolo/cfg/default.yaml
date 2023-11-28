@@ -14,7 +14,7 @@ imgsz: 640  # size of input images as integer or w,h
 save: True  # save train checkpoints and predict results
 save_period: -1 # Save checkpoint every x epochs (disabled if < 1)
 cache: False  # True/ram, disk or False. Use cache for data loading
-device:  # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
+device: 0 # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
 workers: 8  # number of worker threads for data loading (per RANK if DDP)
 project:  # project name
 name:  # experiment name, results saved to 'project/name' directory
@@ -114,4 +114,5 @@ cfg:  # for overriding defaults.yaml
 v5loader: False  # use legacy YOLOv5 dataloader
 
 # Tracker settings ------------------------------------------------------------------------------------------------------
-tracker: botsort.yaml  # tracker type, ['botsort.yaml', 'bytetrack.yaml']
+tracker: botsort.yaml  # tracker type, ['botsort.yaml', 'bytetrack.yaml', 'deepocsort.yaml', 'hybirdsort.yaml']
+reid_weight: /workspace/cv-docker/joey04.li/datasets/yolo_tracking/examples/weights/osnet_x1_0_imagenet.pt  # reid model weight path
