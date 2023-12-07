@@ -234,7 +234,7 @@ class BasePredictor:
             self.run_callbacks('on_predict_batch_start')
             self.batch = batch
             path, im0s, vid_cap, s = batch
-            frame_idx = s.split(' ')[2][1:-1].split('/')[0]  # 获取当前帧数
+            frame_idx = s.split(' ')[2][1:-1].split('/')[0] if vid_cap else None# 获取当前帧数
             visualize = increment_path(self.save_dir / Path(path[0]).stem,
                                        mkdir=True) if self.args.visualize and (not self.source_type.tensor) else False
 
