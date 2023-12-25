@@ -27,7 +27,7 @@ def transformer_opt(opt):
 def parse_opt():
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--yaml', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/ultralytics/models/v8/yolov8s-C2f-EMSC-only1024.yaml', help='model.yaml path')
+    parser.add_argument('--yaml', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/ultralytics/models/v8/yolov8s-C2f-EMSC-attention.yaml', help='model.yaml path')
     parser.add_argument('--weight', type=str, default='', help='pretrained model path')
     parser.add_argument('--cfg', type=str, default='hyp.yaml', help='hyperparameters path')
     parser.add_argument('--data', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/dataset/classroom_data.yaml', help='data yaml path')
@@ -36,12 +36,12 @@ def parse_opt():
     parser.add_argument('--patience', type=int, default=100, help='EarlyStopping patience (epochs without improvement)')
     parser.add_argument('--unamp', action='store_true', help='Unuse Automatic Mixed Precision (AMP) training')
     parser.add_argument('--batch', type=int, default=164, help='number of images per batch (-1 for AutoBatch)')
-    parser.add_argument('--imgsz', type=int, default=640, help='size of input images as integer')
+    parser.add_argument('--imgsz', type=int, default=480, help='size of input images as integer')
     parser.add_argument('--cache', type=str, nargs='?', const='ram', help='image --cache ram/disk')
     parser.add_argument('--device', type=str, default='7', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--workers', type=int, default=8, help='max dataloader workers (per RANK in DDP mode)')
     parser.add_argument('--project', type=str, default=ROOT / 'runs/train', help='save to project/name')
-    parser.add_argument('--name', type=str, default='yolov8s-C2f-EMSC-only1024-164bs-500ep', help='save to project/name')
+    parser.add_argument('--name', type=str, default='yolov8s-C2f-EMSC-BiLevelRoutingAttention-nchw-480imgsz-164bs-500ep', help='save to project/name')
     parser.add_argument('--resume', type=str, default='', help='resume training from last checkpoint')
     parser.add_argument('--optimizer', type=str, choices=['SGD', 'Adam', 'Adamax', 'NAdam', 'RAdam', 'AdamW', 'RMSProp', 'auto'], default='SGD', help='optimizer (auto -> ultralytics/yolo/engine/trainer.py in build_optimizer funciton.)')
     parser.add_argument('--close_mosaic', type=int, default=0, help='(int) disable mosaic augmentation for final epochs')
