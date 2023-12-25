@@ -5,7 +5,8 @@ import matplotlib.pylab as plt
 
 pwd = os.getcwd()
 
-names = []
+# names = ['yolov8s-C2f-EMSC-attention-BiLevelRoutingAttention-nchw-164bs-500ep', 'yolov8s-C2f-EMSC-164bs-500ep', 'yolov8s-164bs-500ep']
+names = ['yolov8s-LRMSC-BRA', 'yolov8s-LRMSC', 'yolov8s']
 
 plt.figure(figsize=(10, 10))
 
@@ -87,13 +88,13 @@ plt.xlabel('epoch')
 plt.title('val/dfl_loss')
 plt.legend()
 
-plt.subplot(2, 3, 6)
-for i in names:
-    data = pd.read_csv(f'runs/train/{i}/results.csv')
-    plt.plot(data['           val/cls_loss'], label=i)
-plt.xlabel('epoch')
-plt.title('val/cls_loss')
-plt.legend()
+# plt.subplot(2, 3, 6)
+# for i in names:
+#     data = pd.read_csv(f'runs/train/{i}/results.csv')
+#     plt.plot(data['           val/cls_loss'], label=i)
+# plt.xlabel('epoch')
+# plt.title('val/cls_loss')
+# plt.legend()
 
 plt.tight_layout()
 plt.savefig('loss_curve.png')
