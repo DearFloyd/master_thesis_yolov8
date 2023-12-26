@@ -16,7 +16,7 @@ def make_plot(plot_type):
             color='action',
             # longitude=2,
             # alt.X()
-        ).properties(width=1000, height=800)
+        ).properties(width=1000, height=500)
         # return alt.Chart(source).mark_line(point=True).encode(
         #     x='timesteps',
         #     y='count',

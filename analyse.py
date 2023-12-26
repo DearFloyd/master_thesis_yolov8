@@ -49,7 +49,7 @@ def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_25.csv'):
+def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_25_stand.csv', stand_only=False):
     df = DataFrame(
         columns=['timesteps', 'action', 'count'],
     )
@@ -81,6 +81,9 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_25.csv
                     action = 'stand'
                 elif 'write' in action:
                     action = 'write'
+                if stand_only:
+                    if action != 'stand':
+                        continue
                 data[1], data[2] = action, count
                 df.loc[len(df)] = data
     df.to_csv(outputpath, sep=',', index=False, header=True)
