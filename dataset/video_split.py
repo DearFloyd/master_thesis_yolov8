@@ -1,13 +1,14 @@
 import os
 import cv2
 
-"""
-功能:将视频转成图片(提取视频的每一帧图片)
-     1.能够设置多少帧提取一帧图片
-     2.可以设置输出图片的大小及灰度图
-     3.手动设置输出图片的命名格式
-"""
+
 def ExtractVideoFrame(video_input,output_path):
+    """
+    功能:将视频转成图片(提取视频的每一帧图片)
+        1.能够设置多少帧提取一帧图片
+        2.可以设置输出图片的大小及灰度图
+        3.手动设置输出图片的命名格式
+    """
     # 输出文件夹不存在，则创建输出文件夹
     if not os.path.exists(output_path):
         os.mkdir(output_path)
@@ -34,10 +35,11 @@ def ExtractVideoFrame(video_input,output_path):
             print(output_path + os.sep + img_name)  # 输出提示
     cap.release()
 
-"""
-功能:获取视频的指定帧并进行显示
-"""
+
 def ShowSpecialFrame(file_path,frame_index):
+    """
+    功能:获取视频的指定帧并进行显示
+    """
     cap = cv2.VideoCapture(file_path)  # 读取视频文件
     cap.set(cv2.CAP_PROP_POS_FRAMES, float(frame_index))
     if cap.isOpened():  # 判断是否正常打开
@@ -46,13 +48,14 @@ def ShowSpecialFrame(file_path,frame_index):
         cv2.waitKey()
     cap.release()
 
-"""
-功能:切割视频的指定帧。比如切割视频从100帧到第200帧的图片
-     1.能够设置多少帧提取一帧图片
-     2.可以设置输出图片的大小及灰度图
-     3.手动设置输出图片的命名格式
-"""
+
 def ExtractVideoBySpecialFrame(video_input,output_path,start_frame_index,end_frame_index = -1):
+    """
+    功能:切割视频的指定帧。比如切割视频从100帧到第200帧的图片
+        1.能够设置多少帧提取一帧图片
+        2.可以设置输出图片的大小及灰度图
+        3.手动设置输出图片的命名格式
+    """
     # 输出文件夹不存在，则创建输出文件夹
     if not os.path.exists(output_path):
         os.mkdir(output_path)
@@ -98,6 +101,10 @@ def ExtractVideoBySpecialFrame(video_input,output_path,start_frame_index,end_fra
                 print(output_path + os.sep + img_name)  # 输出提示
         print('图片提取结束！！')
     cap.release()
+
+
+def split_video_period(video_path):
+    pass
 
 
 if __name__ == "__main__":
