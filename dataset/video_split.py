@@ -1,5 +1,6 @@
 import os
 import cv2
+from tqdm import tqdm
 
 
 def ExtractVideoFrame(video_input,output_path):
@@ -104,20 +105,53 @@ def ExtractVideoBySpecialFrame(video_input,output_path,start_frame_index,end_fra
 
 
 def split_video_period(video_path):
-    pass
+    # 获得视频对象
+    videoCapture = cv2.VideoCapture(video_path)
+    # 获得码率及尺寸
+    frames = int(videoCapture.get(cv2.CAP_PROP_FRAME_COUNT))  # 获得视频文件的帧数
+    fps = videoCapture.get(cv2.CAP_PROP_FPS)
+    size = (int(videoCapture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(videoCapture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+
+    print('fps {}  size {} nums {}'.format(fps, size, frames))
+
+    name = 1
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    vout = cv2.VideoWriter('/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/split_output{}.mp4'.format(name), fourcc, fps, size)
+
+    period_length = 15 * 60  # 存为十五分钟视频
+    period_frames = period_length * fps  # 每个片段的总帧数
+    num = -1
+
+    for i in range(frames):
+        print(f"crruent {i}/{frames}")
+        num += 1
+        success, frame = videoCapture.read()
+        if success:
+            if(num % period_frames < period_frames - 1):
+                vout.write(frame)
+            else:
+                print("\r", "正在截取第{}个视频".format(name), end="", flush=True)
+                name += 1
+                vout = cv2.VideoWriter('/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/split_output{}.mp4'.format(name), fourcc, fps, size)
+        else:
+            break
 
 
 if __name__ == "__main__":
     # 视频路径
-    video_input = 'G:/classroom_dataset/10.22/001.mp4'
+    # video_input = 'G:/classroom_dataset/10.22/001.mp4'
+    video_input = '/workspace/cv-docker/joey04.li/datasets/video_data/10.22.mp4'
     # 图片输出路径
     output_path = 'G:/classroom_dataset/image_10_16'
 
     # 提取视频图片
-    ExtractVideoFrame(video_input, output_path)
+    # ExtractVideoFrame(video_input, output_path)
 
     # 显示视频第100帧的图片
     # ShowSpecialFrame(video_input, 1500)
 
     # 获取视频第100帧到第200帧的图片
     # ExtractVideoBySpecialFrame(video_input, output_path, 100, 200)
+
+    # 分割视频片段
+    split_video_period(video_input)
