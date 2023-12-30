@@ -49,7 +49,7 @@ def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_25_stand.csv', stand_only=False):
+def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_29_2.csv', stand_only=False):
     df = DataFrame(
         columns=['timesteps', 'action', 'count'],
     )
@@ -126,7 +126,7 @@ def analyse_visualization(data_path):
 
 if __name__ == "__main__":
     # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
-    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_12_25/verbose.txt'
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_12_29_2/verbose.txt'
     info_analyse_to_dataframe(infer_info_path)
     
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')

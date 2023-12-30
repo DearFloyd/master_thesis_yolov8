@@ -8,9 +8,9 @@ from vega_datasets import data
 
 def make_plot(plot_type):
     if plot_type == "scatter_plot":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_12_25.csv")
+        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_12_29_2.csv")
         # cars = data.cars()
-        return alt.Chart(source).mark_point().encode(
+        return alt.Chart(source).mark_line().encode(
             x='timesteps',
             y='count',
             color='action',
@@ -109,32 +109,32 @@ def make_plot(plot_type):
         c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
 
         return c1 + c2
-    elif plot_type == "multiline":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
-        # source = data.stocks()
+    # elif plot_type == "multiline":
+    #     source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
+    #     # source = data.stocks()
 
-        highlight = alt.selection(type='single', on='mouseover',
-                                fields=['symbol'], nearest=True)
+    #     highlight = alt.selection(type='single', on='mouseover',
+    #                             fields=['symbol'], nearest=True)
 
-        base = alt.Chart(source).encode(
-            x='timesteps:T',
-            y='count:Q',
-            color='action:N'
-        )
+    #     base = alt.Chart(source).encode(
+    #         x='timesteps:T',
+    #         y='count:Q',
+    #         color='action:N'
+    #     )
 
-        points = base.mark_circle().encode(
-            opacity=alt.value(0)
-        ).add_selection(
-            highlight
-        ).properties(
-            width=600
-        )
+    #     points = base.mark_circle().encode(
+    #         opacity=alt.value(0)
+    #     ).add_selection(
+    #         highlight
+    #     ).properties(
+    #         width=600
+    #     )
 
-        lines = base.mark_line().encode(
-            size=alt.condition(~highlight, alt.value(1), alt.value(3))
-        )
+    #     lines = base.mark_line().encode(
+    #         size=alt.condition(~highlight, alt.value(1), alt.value(3))
+    #     )
 
-        return points + lines
+    #     return points + lines
 
 
 if __name__ == "__main__":
