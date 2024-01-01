@@ -121,9 +121,9 @@ def split_video_period(video_path):
     period_length = 15 * 60  # 存为十五分钟视频
     period_frames = period_length * fps  # 每个片段的总帧数
     num = -1
-
+    print("\r", "正在截取第{}个视频".format(name), end="", flush=True)
     for i in range(frames):
-        print(f"crruent {i}/{frames}")
+        print(f"crruent {i}/{frames}", end="\n", flush=True)
         num += 1
         success, frame = videoCapture.read()
         if success:
@@ -136,6 +136,7 @@ def split_video_period(video_path):
         else:
             break
 
+    videoCapture.release()
 
 if __name__ == "__main__":
     # 视频路径
