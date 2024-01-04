@@ -8,7 +8,7 @@ from vega_datasets import data
 
 def make_plot(plot_type):
     if plot_type == "scatter_plot":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_12_29_2.csv")
+        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_01_04_15min.csv")
         # cars = data.cars()
         return alt.Chart(source).mark_line().encode(
             x='timesteps',
@@ -109,40 +109,49 @@ def make_plot(plot_type):
         c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
 
         return c1 + c2
-    # elif plot_type == "multiline":
-    #     source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
-    #     # source = data.stocks()
+    elif plot_type == "multiline":
+        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
+        # source = data.stocks()
 
-    #     highlight = alt.selection(type='single', on='mouseover',
-    #                             fields=['symbol'], nearest=True)
+        highlight = alt.selection(type='single', on='mouseover',
+                                fields=['symbol'], nearest=True)
 
-    #     base = alt.Chart(source).encode(
-    #         x='timesteps:T',
-    #         y='count:Q',
-    #         color='action:N'
-    #     )
+        base = alt.Chart(source).encode(
+            x='timesteps:T',
+            y='count:Q',
+            color='action:N'
+        )
 
-    #     points = base.mark_circle().encode(
-    #         opacity=alt.value(0)
-    #     ).add_selection(
-    #         highlight
-    #     ).properties(
-    #         width=600
-    #     )
+        points = base.mark_circle().encode(
+            opacity=alt.value(0)
+        ).add_selection(
+            highlight
+        ).properties(
+            width=600
+        )
 
-    #     lines = base.mark_line().encode(
-    #         size=alt.condition(~highlight, alt.value(1), alt.value(3))
-    #     )
+        lines = base.mark_line().encode(
+            size=alt.condition(~highlight, alt.value(1), alt.value(3))
+        )
 
-    #     return points + lines
+        return points + lines
 
+
+    alt.Chart(source).mark_bar(
+        cornerRadiusTopLeft=3,
+        cornerRadiusTopRight=3
+    ).encode(
+        x='month(date):O',
+        y='count():Q',
+        color='weather:N'
+    )
 
 if __name__ == "__main__":
 
     with gr.Blocks() as demo:
         button = gr.Radio(label="Plot type",
                         choices=['scatter_plot', 'heatmap', 'us_map',
-                                'interactive_barplot', "radial", "multiline"], value='scatter_plot')
+                                'interactive_barplot', "radial"], value='scatter_plot')
         plot = gr.Plot(label="Plot")
         button.change(make_plot, inputs=button, outputs=[plot])
         demo.load(make_plot, inputs=[button], outputs=[plot])

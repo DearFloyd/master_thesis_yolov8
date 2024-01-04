@@ -54,7 +54,7 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_29_2.c
         columns=['timesteps', 'action', 'count'],
     )
     with open(infer_info_path, 'r') as f:
-        lines = f.readlines(50000)
+        lines = f.readlines()
         for line in tqdm(lines):
             action_info = line.strip(' ').split(',')
             timestep, actions = action_info[0], action_info[1:-1]  # 末尾为换行符
@@ -87,6 +87,59 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_29_2.c
                 data[1], data[2] = action, count
                 df.loc[len(df)] = data
     df.to_csv(outputpath, sep=',', index=False, header=True)
+
+
+def partion_bar_chart(infer_info_path, outputpath):
+    df = DataFrame(
+        columns=['timesteps', 'listen_carefully', 'other_number', 'total_number'],
+    )
+    with open(infer_info_path, 'r') as f:
+        lines = f.readlines()
+        for line in tqdm(lines):
+            action_info = line.strip(' ').split(',')
+            timestep, actions = action_info[0], action_info[1:-1]  # 末尾为换行符
+            timestep = timestep.strip(' ').split(' ')[-1]
+            m, s = divmod(int(timestep), 60)
+            if s < 10:
+                s = '0' + str(s)
+            h, m = divmod(m, 60)
+            timestep = str(h) + ':' + str(m) + ':' + str(s)
+            listen_carefully = 0
+            other_number = 0
+            total_number = 0
+            for item in actions:
+                data = [0] * len(df.columns)
+                data[0] = timestep
+                item = item.strip(' ')
+                count, action = item.split(' ')
+                count = int(count)
+                if 'listen' in action:
+                    action = 'listen'
+                    listen_carefully += count
+                    total_number += count
+                elif 'shelter' in action:
+                    action = 'shelter'
+                    total_number += count
+                    other_number += count
+                elif 'neutrality' in action:
+                    action = 'neutrality'
+                    listen_carefully += count
+                    total_number += count
+                elif 'phone' in action:
+                    action = 'phone'
+                    total_number += count
+                    other_number += count
+                elif 'stand' in action:
+                    action = 'stand'
+                    listen_carefully += count
+                    total_number += count
+                elif 'write' in action:
+                    action = 'write'
+                    listen_carefully += count
+                    total_number += count
+            data[1], data[2], data[3] = listen_carefully, other_number, total_number
+            df.loc[len(df)] = data
+        df.to_csv(outputpath, sep=',', index=False, header=True)
 
 def analyse_visualization(data_path):
     df = pd.read_csv(data_path)
@@ -127,8 +180,10 @@ def analyse_visualization(data_path):
 if __name__ == "__main__":
     # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_12_29_2/verbose.txt'
-    info_analyse_to_dataframe(infer_info_path)
-    
+    outputpath = 'result_test.csv'
+    # info_analyse_to_dataframe(infer_info_path, outputpath)
+    partion_bar_chart(infer_info_path, outputpath)
+
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')
     # source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
     # source['timesteps'] = pd.to_datetime(source['timesteps'], format='%H:%M:%S')
