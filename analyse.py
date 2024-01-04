@@ -49,7 +49,7 @@ def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_29_2.csv', stand_only=False):
+def info_analyse_to_dataframe(infer_info_path, outputpath, stand_only=False):
     df = DataFrame(
         columns=['timesteps', 'action', 'count'],
     )
