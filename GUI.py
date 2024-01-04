@@ -145,7 +145,7 @@ def make_plot(plot_type):
             x='timesteps',
             y='count():Q',
             color='state'
-        ).properties(width=1000, height=500)  # 需要记得修改/altair/vegalite/data.py中的max_rows: int 从5000到50000
+        ).properties(width=1000, height=500)  # 需要记得修改altair库中的/altair/vegalite/data.py中的max_rows: int 从5000到50000
 
 if __name__ == "__main__":
 
