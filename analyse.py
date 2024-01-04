@@ -91,7 +91,7 @@ def info_analyse_to_dataframe(infer_info_path, outputpath='result_test_12_29_2.c
 
 def partion_bar_chart(infer_info_path, outputpath):
     df = DataFrame(
-        columns=['timesteps', 'listen_carefully', 'other_number', 'total_number'],
+        columns=['timesteps', 'state'],
     )
     with open(infer_info_path, 'r') as f:
         lines = f.readlines()
@@ -108,8 +108,6 @@ def partion_bar_chart(infer_info_path, outputpath):
             other_number = 0
             total_number = 0
             for item in actions:
-                data = [0] * len(df.columns)
-                data[0] = timestep
                 item = item.strip(' ')
                 count, action = item.split(' ')
                 count = int(count)
@@ -137,8 +135,16 @@ def partion_bar_chart(infer_info_path, outputpath):
                     action = 'write'
                     listen_carefully += count
                     total_number += count
-            data[1], data[2], data[3] = listen_carefully, other_number, total_number
-            df.loc[len(df)] = data
+            for _ in range(listen_carefully):
+                data = [0] * len(df.columns)
+                data[0] = timestep
+                data[1] = 'listen_carefully'
+                df.loc[len(df)] = data
+            for _ in range(other_number):
+                data = [0] * len(df.columns)
+                data[0] = timestep
+                data[1] = 'other'
+                df.loc[len(df)] = data
         df.to_csv(outputpath, sep=',', index=False, header=True)
 
 def analyse_visualization(data_path):

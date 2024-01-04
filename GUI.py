@@ -136,22 +136,23 @@ def make_plot(plot_type):
 
         return points + lines
 
-
-    alt.Chart(source).mark_bar(
-        cornerRadiusTopLeft=3,
-        cornerRadiusTopRight=3
-    ).encode(
-        x='month(date):O',
-        y='count():Q',
-        color='weather:N'
-    )
+    elif plot_type == "bar_chart":
+        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test.csv")
+        return alt.Chart(source).mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state'
+        ).properties(width=1000, height=500)  # 需要记得修改/altair/vegalite/data.py中的max_rows: int 从5000到50000
 
 if __name__ == "__main__":
 
     with gr.Blocks() as demo:
         button = gr.Radio(label="Plot type",
                         choices=['scatter_plot', 'heatmap', 'us_map',
-                                'interactive_barplot', "radial"], value='scatter_plot')
+                                'interactive_barplot', "radial", 'bar_chart'], value='scatter_plot')
         plot = gr.Plot(label="Plot")
         button.change(make_plot, inputs=button, outputs=[plot])
         demo.load(make_plot, inputs=[button], outputs=[plot])
