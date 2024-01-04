@@ -7,6 +7,7 @@ import altair as alt
 import pandas as pd
 from ultralytics import YOLO
 from vega_datasets import data
+from analyse import info_analyse_to_dataframe
 
 
 def parse_opt():
@@ -160,19 +161,12 @@ def make_plot_00_15(plot_type):
 def make_plot_15_30(plot_type):
     if plot_type == "scatter_plot":
         source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_01_04_15min.csv")
-        # cars = data.cars()
         return alt.Chart(source, title="各行为分布0-15分钟").mark_line().encode(
-            # alt.X('timesteps', bin=True),
             x='timesteps',
             y='count',
             color='action',
-            # longitude=2,
         ).properties(width=1000, height=500)
-        # return alt.Chart(source).mark_line(point=True).encode(
-        #     x='timesteps',
-        #     y='count',
-        #     color='action',
-        # )
+
 
 if __name__ == "__main__":
 
