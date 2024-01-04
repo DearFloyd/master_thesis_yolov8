@@ -49,7 +49,7 @@ def info_analyse_to_dataframe_old(infer_info_path, outputpath='result_test11.csv
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def info_analyse_to_dataframe(infer_info_path, outputpath, stand_only=False):
+def infer_multi_line(infer_info_path, outputpath, stand_only=False):
     df = DataFrame(
         columns=['timesteps', 'action', 'count'],
     )
@@ -89,7 +89,7 @@ def info_analyse_to_dataframe(infer_info_path, outputpath, stand_only=False):
     df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
-def partion_bar_chart(infer_info_path, outputpath):
+def infer_bar_chart(infer_info_path, outputpath):
     df = DataFrame(
         columns=['timesteps', 'state'],
     )
@@ -187,8 +187,8 @@ if __name__ == "__main__":
     # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_12_29_2/verbose.txt'
     outputpath = 'result_test.csv'
-    # info_analyse_to_dataframe(infer_info_path, outputpath)
-    partion_bar_chart(infer_info_path, outputpath)
+    # infer_multi_line(infer_info_path, outputpath)
+    infer_bar_chart(infer_info_path, outputpath)
 
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')
     # source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")

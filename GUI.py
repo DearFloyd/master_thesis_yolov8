@@ -2,12 +2,12 @@
 import gradio as gr
 import numpy as np
 import argparse, warnings
-import time
+import os
 import altair as alt
 import pandas as pd
 from ultralytics import YOLO
 from vega_datasets import data
-from analyse import info_analyse_to_dataframe
+from analyse import infer_bar_chart, infer_multi_line
 
 
 def parse_opt():
@@ -67,119 +67,204 @@ def yolov8_detect():
 
 
 def make_plot_00_15(plot_type):
-    if plot_type == "scatter_plot":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_01_04_15min.csv")
-        return alt.Chart(source, title="各行为分布0-15分钟").mark_line().encode(
-            # alt.X('timesteps', bin=True),
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="0-15分钟分布").mark_line().encode(
             x='timesteps',
             y='count',
             color='action',
         ).properties(width=1000, height=500)
-    
-    elif plot_type == "heatmap":
-        # Compute x^2 + y^2 across a 2D grid
-        x, y = np.meshgrid(range(-5, 5), range(-5, 5))
-        z = x ** 2 + y ** 2
-
-        # Convert this grid to columnar data expected by Altair
-        source = pd.DataFrame({'x': x.ravel(),
-                            'y': y.ravel(),
-                            'z': z.ravel()})
-        return alt.Chart(source).mark_rect().encode(
-            x='x:O',
-            y='y:O',
-            color='z:Q'
-        )
-    
-    elif plot_type == "interactive_barplot":
-        source = data.movies.url
-
-        pts = alt.selection(type="single", encodings=['x'])
-
-        rect = alt.Chart(data.movies.url).mark_rect().encode(
-            alt.X('IMDB_Rating:Q', bin=True),
-            alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
-            alt.Color('count()',
-                scale=alt.Scale(scheme='greenblue'),
-                legend=alt.Legend(title='Total Records')
-            )
-        )
-
-        circ = rect.mark_point().encode(
-            alt.ColorValue('grey'),
-            alt.Size('count()',
-                legend=alt.Legend(title='Records in Selection')
-            )
-        ).transform_filter(
-            pts
-        )
-
-        bar = alt.Chart(source).mark_bar().encode(
-            x='Major_Genre:N',
-            y='count()',
-            color=alt.condition(pts, alt.ColorValue("steelblue"), alt.ColorValue("grey"))
-        ).properties(
-            width=550,
-            height=200
-        ).add_selection(pts)
-
-        plot = alt.vconcat(
-            rect + circ,
-            bar
-        ).resolve_legend(
-            color="independent",
-            size="independent"
-        )
-        return plot
-    elif plot_type == "radial":
-        source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
-
-        base = alt.Chart(source).encode(
-            theta=alt.Theta("values:Q", stack=True),
-            radius=alt.Radius("values", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-            color="values:N",
-        )
-
-        c1 = base.mark_arc(innerRadius=20, stroke="#fff")
-
-        c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
-
-        return c1 + c2
 
     elif plot_type == "bar_chart":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test.csv")
-        return alt.Chart(source, title="状态比例").mark_bar(
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="0-15分钟状态比例").mark_bar(
             cornerRadiusTopLeft=3,
             cornerRadiusTopRight=3
         ).encode(
             x='timesteps',
             y='count():Q',
             color='state',
-        ).properties(width=1000, height=500)  # 需要记得修改altair库中的/altair/vegalite/data.py中的max_rows: int 从5000到50000
+        ).properties(width=1300, height=500)  # 需要记得修改altair库中的/altair/vegalite/data.py中的max_rows: int 从5000到50000
 
 
 def make_plot_15_30(plot_type):
-    if plot_type == "scatter_plot":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_01_04_15min.csv")
-        return alt.Chart(source, title="各行为分布0-15分钟").mark_line().encode(
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="15-30分钟分布").mark_line().encode(
             x='timesteps',
             y='count',
             color='action',
         ).properties(width=1000, height=500)
+    
+    elif plot_type == "bar_chart":
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="15-30分钟状态比例").mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state',
+        ).properties(width=1300, height=500)
+    
 
+def make_plot_30_45(plot_type):
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="30-45分钟分布").mark_line().encode(
+            x='timesteps',
+            y='count',
+            color='action',
+        ).properties(width=1000, height=500)
+    
+    elif plot_type == "bar_chart":
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="30-45分钟状态比例").mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state',
+        ).properties(width=1300, height=500)
+
+
+def make_plot_45_60(plot_type):
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output4/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output4/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output4/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="45-60分钟分布").mark_line().encode(
+            x='timesteps',
+            y='count',
+            color='action',
+        ).properties(width=1000, height=500)
+    
+    elif plot_type == "bar_chart":
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="45-60分钟状态比例").mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state',
+        ).properties(width=1300, height=500)
+
+
+def make_plot_60_75(plot_type):
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output5/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output5/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output5/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="60-75分钟分布").mark_line().encode(
+            x='timesteps',
+            y='count',
+            color='action',
+        ).properties(width=1000, height=500)
+    
+    elif plot_type == "bar_chart":
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="60-75分钟状态比例").mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state',
+        ).properties(width=1300, height=500)
+    
+
+def make_plot_75_90(plot_type):
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output6/verbose.txt'
+    outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output6/mark_line.csv'
+    outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output6/mark_bar.csv'
+    if not os.path.exists(outputpath_mark_line):
+        infer_multi_line(infer_info_path, outputpath_mark_line)
+    if not os.path.exists(outputpath_mark_bar):
+        infer_bar_chart(infer_info_path, outputpath_mark_bar)
+
+    if plot_type == "mutiline":
+        source = pd.read_csv(outputpath_mark_line)
+        return alt.Chart(source, title="75-90分钟分布").mark_line().encode(
+            x='timesteps',
+            y='count',
+            color='action',
+        ).properties(width=1000, height=500)
+    
+    elif plot_type == "bar_chart":
+        source = pd.read_csv(outputpath_mark_bar)
+        return alt.Chart(source, title="75-90分钟状态比例").mark_bar(
+            cornerRadiusTopLeft=3,
+            cornerRadiusTopRight=3
+        ).encode(
+            x='timesteps',
+            y='count():Q',
+            color='state',
+        ).properties(width=1300, height=500)
+    
 
 if __name__ == "__main__":
 
     with gr.Blocks() as demo:
         button = gr.Radio(label="Plot type",
-                          choices=['scatter_plot',
-                                 'bar_chart'], value='scatter_plot')
+                          choices=['mutiline',
+                                 'bar_chart'], value='mutiline')
         plot1 = gr.Plot(label="Plot")
         plot2 = gr.Plot(label="Plot")
+        plot3 = gr.Plot(label="Plot")
+        plot4 = gr.Plot(label="Plot")
+        plot5 = gr.Plot(label="Plot")
+        plot6 = gr.Plot(label="Plot")
+
         button.change(make_plot_00_15, inputs=button, outputs=[plot1])
         button.change(make_plot_15_30, inputs=button, outputs=[plot2])
+        button.change(make_plot_30_45, inputs=button, outputs=[plot3])
+        button.change(make_plot_45_60, inputs=button, outputs=[plot4])
+        button.change(make_plot_60_75, inputs=button, outputs=[plot5])
+        button.change(make_plot_75_90, inputs=button, outputs=[plot6])
+
         demo.load(make_plot_00_15, inputs=[button], outputs=[plot1])
         demo.load(make_plot_15_30, inputs=[button], outputs=[plot2])
+        demo.load(make_plot_30_45, inputs=[button], outputs=[plot3])
+        demo.load(make_plot_45_60, inputs=[button], outputs=[plot4])
+        demo.load(make_plot_60_75, inputs=[button], outputs=[plot5])
+        demo.load(make_plot_75_90, inputs=[button], outputs=[plot6])
         #Blocks特有组件，设置所有子组件按水平排列
         with gr.Row():
             image_input = gr.Image(sources='upload')
