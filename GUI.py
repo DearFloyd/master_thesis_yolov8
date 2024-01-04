@@ -10,12 +10,12 @@ def make_plot(plot_type):
     if plot_type == "scatter_plot":
         source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_01_04_15min.csv")
         # cars = data.cars()
-        return alt.Chart(source).mark_line().encode(
+        return alt.Chart(source, title="各行为分布0-15分钟").mark_line().encode(
+            # alt.X('timesteps', bin=True),
             x='timesteps',
             y='count',
             color='action',
             # longitude=2,
-            # alt.X()
         ).properties(width=1000, height=500)
         # return alt.Chart(source).mark_line(point=True).encode(
         #     x='timesteps',
@@ -109,49 +109,24 @@ def make_plot(plot_type):
         c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
 
         return c1 + c2
-    elif plot_type == "multiline":
-        source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
-        # source = data.stocks()
-
-        highlight = alt.selection(type='single', on='mouseover',
-                                fields=['symbol'], nearest=True)
-
-        base = alt.Chart(source).encode(
-            x='timesteps:T',
-            y='count:Q',
-            color='action:N'
-        )
-
-        points = base.mark_circle().encode(
-            opacity=alt.value(0)
-        ).add_selection(
-            highlight
-        ).properties(
-            width=600
-        )
-
-        lines = base.mark_line().encode(
-            size=alt.condition(~highlight, alt.value(1), alt.value(3))
-        )
-
-        return points + lines
 
     elif plot_type == "bar_chart":
         source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test.csv")
-        return alt.Chart(source).mark_bar(
+        return alt.Chart(source, title="状态比例").mark_bar(
             cornerRadiusTopLeft=3,
             cornerRadiusTopRight=3
         ).encode(
             x='timesteps',
             y='count():Q',
-            color='state'
+            color='state',
         ).properties(width=1000, height=500)  # 需要记得修改altair库中的/altair/vegalite/data.py中的max_rows: int 从5000到50000
+
 
 if __name__ == "__main__":
 
     with gr.Blocks() as demo:
         button = gr.Radio(label="Plot type",
-                        choices=['scatter_plot', 'heatmap', 'us_map',
+                        choices=['scatter_plot', 'us_map',
                                 'interactive_barplot', "radial", 'bar_chart'], value='scatter_plot')
         plot = gr.Plot(label="Plot")
         button.change(make_plot, inputs=button, outputs=[plot])
