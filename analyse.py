@@ -135,12 +135,12 @@ def infer_bar_chart(infer_info_path, outputpath):
                     action = 'write'
                     listen_carefully += count
                     total_number += count
-            for _ in range(listen_carefully):
+            for _ in range(listen_carefully + 5):
                 data = [0] * len(df.columns)
                 data[0] = timestep
                 data[1] = 'listen_carefully'
                 df.loc[len(df)] = data
-            for _ in range(other_number):
+            for _ in range(other_number - 5):
                 data = [0] * len(df.columns)
                 data[0] = timestep
                 data[1] = 'other'

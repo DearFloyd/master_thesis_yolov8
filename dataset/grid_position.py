@@ -19,6 +19,10 @@ def draw_points(img_path):
     for coor in coors:
         cv2.circle(image, (int(coor[0]),int(coor[1])), point_size, point_color, thickness)
     
+    cv2.line(image, coors[0], coors[1], (0, 0, 255), 10)
+    cv2.line(image, coors[2], coors[3], (0, 0, 255), 10)
+    cv2.line(image, coors[4], coors[5], (0, 0, 255), 10)
+
     cv2.imwrite('/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/draw_2.png', image)
 
 
