@@ -253,6 +253,7 @@ class BasePredictor:
 
             # 网格定位解析
             coors = self.args.grid_points_coors
+            # coors = np.asanyarray(coors)
             bboxes = self.results[0].boxes.data
             bboxes = np.asanyarray(bboxes.cpu())
             for bbox in bboxes:
@@ -260,17 +261,17 @@ class BasePredictor:
                 w = xmax - xmin
                 h = ymax - ymin
                 center = np.array([xmin + w * 0.5, ymin + h * 0.5])
-                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                if cv2.pointPolygonTest(np.array([coors[0], coors[2], coors[8], coors[6]]), center, False) >= 0:  # 右1网格
                     pass
-                if cv2.pointPolygonTest((coors[2], coors[4], coors[10], coors[8]), center, False):
+                elif cv2.pointPolygonTest(np.array([coors[2], coors[4], coors[10], coors[8]]), center, False) >= 0:  # 右2网格
                     pass
-                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                elif cv2.pointPolygonTest(np.array([coors[6], coors[8], coors[9], coors[7]]), center, False) >= 0:  # 中1网格
                     pass
-                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                elif cv2.pointPolygonTest(np.array([coors[8], coors[10], coors[11], coors[9]]), center, False) >= 0:  # 中2网格
                     pass
-                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                elif cv2.pointPolygonTest(np.array([coors[7], coors[9], coors[3], coors[1]]), center, False) >= 0:  # 左1网格
                     pass
-                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                elif cv2.pointPolygonTest(np.array([coors[9], coors[11], coors[5], coors[3]]), center, False) >= 0:  # 左2网格
                     pass
 
             # Visualize, save, write results

@@ -18,11 +18,15 @@ def draw_points(img_path):
              [1365, 580],  # 中右3
              [745, 745],  # 中左3
              ]
-    
+    test_coors = [[ 950,   75],
+                [1250,  200],
+                [ 890,  260],
+                [ 685,  125]]
+    center = [[490, 450]]
     point_size = 10  
     point_color = (0, 0, 255) # BGR
     thickness = 8
-    for coor in coors:
+    for coor in center:
         cv2.circle(image, (int(coor[0]),int(coor[1])), point_size, point_color, thickness)
     
     cv2.line(image, coors[0], coors[1], (0, 0, 255), 10)

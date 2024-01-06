@@ -13,7 +13,7 @@ def transformer_opt(opt):
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/yolov8s-C2f-EMSC-attention-head--164bs-500ep/weights/best.pt', help='training model path')
-    parser.add_argument('--source', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/split_output6.mp4', help='source directory for images or videos')
+    parser.add_argument('--source', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/split_output3.mp4', help='source directory for images or videos')
     parser.add_argument('--conf', type=float, default=0.35, help='object confidence threshold for detection')
     parser.add_argument('--iou', type=float, default=0.6, help='intersection over union (IoU) threshold for NMS')
     parser.add_argument('--mode', type=str, default='predict', choices=['predict', 'track'], help='predict mode or track mode')
