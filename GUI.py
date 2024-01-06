@@ -7,7 +7,7 @@ import altair as alt
 import pandas as pd
 from ultralytics import YOLO
 from vega_datasets import data
-from analyse import infer_bar_chart, infer_multi_line
+from analyse import infer_bar_chart, infer_multi_line, mean_ratio
 
 
 def parse_opt():
@@ -70,10 +70,15 @@ def make_plot_00_15(plot_type):
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/verbose.txt'
     outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/mark_line.csv'
     outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/mark_bar.csv'
+    outputpath_radial = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/radial.csv'
+
     if not os.path.exists(outputpath_mark_line):
         infer_multi_line(infer_info_path, outputpath_mark_line)
     if not os.path.exists(outputpath_mark_bar):
         infer_bar_chart(infer_info_path, outputpath_mark_bar)
+    if not os.path.exists(outputpath_radial):
+        mean_ratio(infer_info_path, outputpath_radial)
+    
     if plot_type == "mutiline":
         source = pd.read_csv(outputpath_mark_line)
         return alt.Chart(source, title="0-15分钟分布").mark_line().encode(
@@ -92,16 +97,31 @@ def make_plot_00_15(plot_type):
             y='count():Q',
             color='state',
         ).properties(width=1300, height=500)  # 需要记得修改altair库中的/altair/vegalite/data.py中的max_rows: int 从5000到50000
+    
+    elif plot_type == "radial":
+        mean_ratio_radio_source = pd.read_csv(outputpath_radial)
+        base = alt.Chart(mean_ratio_radio_source).encode(
+                theta=alt.Theta("count:Q", stack=True),
+                # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                color="state:N",
+            )
+        c1 = base.mark_arc(outerRadius=160, stroke="#fff")
+        c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
+        return c1 + c2
 
 
 def make_plot_15_30(plot_type):
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/verbose.txt'
     outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/mark_line.csv'
     outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/mark_bar.csv'
+    outputpath_radial = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/radial.csv'
+
     if not os.path.exists(outputpath_mark_line):
         infer_multi_line(infer_info_path, outputpath_mark_line)
     if not os.path.exists(outputpath_mark_bar):
         infer_bar_chart(infer_info_path, outputpath_mark_bar)
+    if not os.path.exists(outputpath_radial):
+        mean_ratio(infer_info_path, outputpath_radial)
 
     if plot_type == "mutiline":
         source = pd.read_csv(outputpath_mark_line)
@@ -122,15 +142,30 @@ def make_plot_15_30(plot_type):
             color='state',
         ).properties(width=1300, height=500)
     
+    elif plot_type == "radial":
+        mean_ratio_radio_source = pd.read_csv(outputpath_radial)
+        base = alt.Chart(mean_ratio_radio_source).encode(
+                theta=alt.Theta("count:Q", stack=True),
+                # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                color="state:N",
+            )
+        c1 = base.mark_arc(outerRadius=160, stroke="#fff")
+        c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
+        return c1 + c2
+    
 
 def make_plot_30_45(plot_type):
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/verbose.txt'
     outputpath_mark_line = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/mark_line.csv'
     outputpath_mark_bar = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output3/mark_bar.csv'
+    outputpath_radial = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output2/radial.csv'
+
     if not os.path.exists(outputpath_mark_line):
         infer_multi_line(infer_info_path, outputpath_mark_line)
     if not os.path.exists(outputpath_mark_bar):
         infer_bar_chart(infer_info_path, outputpath_mark_bar)
+    if not os.path.exists(outputpath_radial):
+        mean_ratio(infer_info_path, outputpath_radial)
 
     if plot_type == "mutiline":
         source = pd.read_csv(outputpath_mark_line)
@@ -150,7 +185,18 @@ def make_plot_30_45(plot_type):
             y='count():Q',
             color='state',
         ).properties(width=1300, height=500)
-
+    
+    elif plot_type == "radial":
+        mean_ratio_radio_source = pd.read_csv(outputpath_radial)
+        base = alt.Chart(mean_ratio_radio_source).encode(
+                theta=alt.Theta("count:Q", stack=True),
+                # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                color="state:N",
+            )
+        c1 = base.mark_arc(outerRadius=160, stroke="#fff")
+        c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
+        return c1 + c2
+    
 
 def make_plot_45_60(plot_type):
     infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output4/verbose.txt'
@@ -244,7 +290,8 @@ if __name__ == "__main__":
     with gr.Blocks() as demo:
         button = gr.Radio(label="Plot type",
                           choices=['mutiline',
-                                 'bar_chart'], value='mutiline')
+                                #    'bar_chart',
+                                   'radial'], value='radial')
         plot1 = gr.Plot(label="Plot")
         plot2 = gr.Plot(label="Plot")
         plot3 = gr.Plot(label="Plot")
@@ -253,18 +300,18 @@ if __name__ == "__main__":
         plot6 = gr.Plot(label="Plot")
 
         button.change(make_plot_00_15, inputs=button, outputs=[plot1])
-        button.change(make_plot_15_30, inputs=button, outputs=[plot2])
+        # button.change(make_plot_15_30, inputs=button, outputs=[plot2])
         button.change(make_plot_30_45, inputs=button, outputs=[plot3])
-        button.change(make_plot_45_60, inputs=button, outputs=[plot4])
-        button.change(make_plot_60_75, inputs=button, outputs=[plot5])
-        button.change(make_plot_75_90, inputs=button, outputs=[plot6])
+        # button.change(make_plot_45_60, inputs=button, outputs=[plot4])
+        # button.change(make_plot_60_75, inputs=button, outputs=[plot5])
+        # button.change(make_plot_75_90, inputs=button, outputs=[plot6])
 
         demo.load(make_plot_00_15, inputs=[button], outputs=[plot1])
-        demo.load(make_plot_15_30, inputs=[button], outputs=[plot2])
+        # demo.load(make_plot_15_30, inputs=[button], outputs=[plot2])
         demo.load(make_plot_30_45, inputs=[button], outputs=[plot3])
-        demo.load(make_plot_45_60, inputs=[button], outputs=[plot4])
-        demo.load(make_plot_60_75, inputs=[button], outputs=[plot5])
-        demo.load(make_plot_75_90, inputs=[button], outputs=[plot6])
+        # demo.load(make_plot_45_60, inputs=[button], outputs=[plot4])
+        # demo.load(make_plot_60_75, inputs=[button], outputs=[plot5])
+        # demo.load(make_plot_75_90, inputs=[button], outputs=[plot6])
         #Blocks特有组件，设置所有子组件按水平排列
         with gr.Row():
             image_input = gr.Image(sources='upload')

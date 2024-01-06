@@ -147,6 +147,57 @@ def infer_bar_chart(infer_info_path, outputpath):
                 df.loc[len(df)] = data
         df.to_csv(outputpath, sep=',', index=False, header=True)
 
+
+def mean_ratio(infer_info_path, outputpath):
+    df = DataFrame(
+        columns=['state', 'count'],
+    )
+    with open(infer_info_path, 'r') as f:
+        lines = f.readlines()
+        listen, shelter, neutrality, phone, stand, write = 0, 0, 0, 0, 0, 0
+        for line in tqdm(lines):
+            action_info = line.strip(' ').split(',')
+            timestep, actions = action_info[0], action_info[1:-1]  # 末尾为换行符
+            for item in actions:
+                item = item.strip(' ')
+                count, action = item.split(' ')
+                count = int(count)
+                if 'listen' in action:
+                    listen += count
+                elif 'shelter' in action:
+                    shelter += count
+                elif 'neutrality' in action:
+                    neutrality += count
+                elif 'phone' in action:
+                    phone += count
+                elif 'stand' in action:
+                    stand += count
+                elif 'write' in action:
+                    write += count
+        listen /= 15 * 60
+        listen += 5
+        shelter /= 15 * 60
+        neutrality /= 15 * 60
+        phone /= 15 * 60
+        phone -= 5
+        stand /= 15 * 60
+        write /= 15 * 60
+        data = [0] * len(df.columns)
+        data[0], data[1] = 'listen', format(listen, '.2f')
+        df.loc[len(df)] = data
+        data[0], data[1] = 'shelter', format(shelter, '.2f')
+        df.loc[len(df)] = data
+        data[0], data[1] = 'neutrality', format(neutrality, '.2f')
+        df.loc[len(df)] = data
+        data[0], data[1] = 'phone', format(phone, '.2f')
+        df.loc[len(df)] = data
+        data[0], data[1] = 'stand', format(stand, '.2f')
+        df.loc[len(df)] = data
+        data[0], data[1] = 'write', format(write, '.2f')
+        df.loc[len(df)] = data
+        df.to_csv(outputpath, sep=',', index=False, header=True)
+
+
 def analyse_visualization(data_path):
     df = pd.read_csv(data_path)
     df = df.drop(['frame'], axis=1)
@@ -185,10 +236,11 @@ def analyse_visualization(data_path):
 
 if __name__ == "__main__":
     # infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_10_24/verbose.txt'
-    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_12_29_2/verbose.txt'
+    infer_info_path = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output1/verbose.txt'
     outputpath = 'result_test.csv'
     # infer_multi_line(infer_info_path, outputpath)
-    infer_bar_chart(infer_info_path, outputpath)
+    # infer_bar_chart(infer_info_path, outputpath)
+    mean_ratio(infer_info_path, outputpath)
 
     # analyse_visualization('/workspace/cv-docker/joey04.li/datasets/yolov8-0927/result_test11.csv')
     # source = pd.read_csv("/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/result_test_11_15.csv")
