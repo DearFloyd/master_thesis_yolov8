@@ -198,6 +198,11 @@ def mean_ratio(infer_info_path, outputpath):
         df.to_csv(outputpath, sep=',', index=False, header=True)
 
 
+def grid_classify_radial(infer_info_path, outputpath):
+    
+    pass
+
+
 def analyse_visualization(data_path):
     df = pd.read_csv(data_path)
     df = df.drop(['frame'], axis=1)

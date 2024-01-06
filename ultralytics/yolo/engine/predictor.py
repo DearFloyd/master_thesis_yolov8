@@ -261,18 +261,26 @@ class BasePredictor:
                 w = xmax - xmin
                 h = ymax - ymin
                 center = np.array([xmin + w * 0.5, ymin + h * 0.5])
+                label = self.results[0].names[bbox[-1]]
+                import os
                 if cv2.pointPolygonTest(np.array([coors[0], coors[2], coors[8], coors[6]]), center, False) >= 0:  # 右1网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_1'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
                 elif cv2.pointPolygonTest(np.array([coors[2], coors[4], coors[10], coors[8]]), center, False) >= 0:  # 右2网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_2'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
                 elif cv2.pointPolygonTest(np.array([coors[6], coors[8], coors[9], coors[7]]), center, False) >= 0:  # 中1网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_3'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
                 elif cv2.pointPolygonTest(np.array([coors[8], coors[10], coors[11], coors[9]]), center, False) >= 0:  # 中2网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_4'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
                 elif cv2.pointPolygonTest(np.array([coors[7], coors[9], coors[3], coors[1]]), center, False) >= 0:  # 左1网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_5'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
                 elif cv2.pointPolygonTest(np.array([coors[9], coors[11], coors[5], coors[3]]), center, False) >= 0:  # 左2网格
-                    pass
+                    with open(os.path.join(self.args.grid_classify, 'area_6'), 'a') as f:
+                        f.write(f'frame {frame_idx}, ' + label + '\n')
 
             # Visualize, save, write results
             n = len(im0s)

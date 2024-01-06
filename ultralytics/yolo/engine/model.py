@@ -250,6 +250,12 @@ class YOLO:
             result = yaml.load(f.read(), Loader=yaml.FullLoader)
             overrides['grid_points_coors'] = result['coors']
 
+        grid_classify_dir = overrides['grid_classify']
+        grid_classify_record_list = os.listdir(grid_classify_dir)
+        if len(grid_classify_record_list) > 0:
+            for i in range(len(grid_classify_record_list)):
+                os.remove(os.path.join(grid_classify_dir, grid_classify_record_list[i]))
+
         if not is_cli:
             overrides['save'] = kwargs.get('save', False)  # do not save by default if called in Python
         if not self.predictor:
