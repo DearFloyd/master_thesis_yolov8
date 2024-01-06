@@ -118,3 +118,4 @@ tracker: botsort.yaml  # tracker type, ['botsort.yaml', 'bytetrack.yaml', 'deepo
 reid_weight: /workspace/cv-docker/joey04.li/datasets/yolo_tracking/examples/weights/osnet_x1_0_imagenet.pt  # reid model weight path
 grid_points_pos:
 grid_points_coors:
+grid_classify:

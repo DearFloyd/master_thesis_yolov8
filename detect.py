@@ -22,6 +22,7 @@ def parse_opt():
     parser.add_argument('--show', action="store_true", help='show results if possible')
     parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output6/verbose.txt', help='save detail predict verbose results as .txt file')
     parser.add_argument('--grid_points_pos', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/dataset/grid_points_pos.yaml', help='grid points position yaml dir'),
+    parser.add_argument('--grid_classify', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/src_img/grid_classify_1')
     parser.add_argument('--save_txt', action="store_true", help='save results as .txt file')
     parser.add_argument('--save_conf', action="store_true", help='save results with confidence scores')
     parser.add_argument('--show_labels', action="store_true", default=True, help='show object labels in plots')
