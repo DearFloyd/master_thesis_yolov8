@@ -18,9 +18,10 @@ def parse_opt():
     parser.add_argument('--iou', type=float, default=0.6, help='intersection over union (IoU) threshold for NMS')
     parser.add_argument('--mode', type=str, default='predict', choices=['predict', 'track'], help='predict mode or track mode')
     parser.add_argument('--project', type=str, default='runs/detect', help='project name')
-    parser.add_argument('--name', type=str, default='split_output6', help='experiment name (project/name)')
+    parser.add_argument('--name', type=str, default='test_0106', help='experiment name (project/name)')
     parser.add_argument('--show', action="store_true", help='show results if possible')
-    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/split_output6/verbose.txt', help='save detail predict verbose results as .txt file')
+    parser.add_argument('--save_verbose', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/test_0106/verbose.txt', help='save detail predict verbose results as .txt file')
+    parser.add_argument('--grid_points_pos', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/dataset/grid_points_pos.yaml', help='grid points position yaml dir'),
     parser.add_argument('--save_txt', action="store_true", help='save results as .txt file')
     parser.add_argument('--save_conf', action="store_true", help='save results with confidence scores')
     parser.add_argument('--show_labels', action="store_true", default=True, help='show object labels in plots')

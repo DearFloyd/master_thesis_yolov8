@@ -251,6 +251,28 @@ class BasePredictor:
                 self.results = self.postprocess(preds, im, im0s)
             self.run_callbacks('on_predict_postprocess_end')
 
+            # 网格定位解析
+            coors = self.args.grid_points_coors
+            bboxes = self.results[0].boxes.data
+            bboxes = np.asanyarray(bboxes.cpu())
+            for bbox in bboxes:
+                xmin, ymin, xmax, ymax = bbox[0:4]
+                w = xmax - xmin
+                h = ymax - ymin
+                center = np.array([xmin + w * 0.5, ymin + h * 0.5])
+                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                    pass
+                if cv2.pointPolygonTest((coors[2], coors[4], coors[10], coors[8]), center, False):
+                    pass
+                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                    pass
+                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                    pass
+                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                    pass
+                if cv2.pointPolygonTest((coors[0], coors[2], coors[8], coors[6]), center, False):
+                    pass
+
             # Visualize, save, write results
             n = len(im0s)
             for i in range(n):

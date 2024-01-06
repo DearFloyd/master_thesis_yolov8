@@ -116,3 +116,5 @@ v5loader: False  # use legacy YOLOv5 dataloader
 # Tracker settings ------------------------------------------------------------------------------------------------------
 tracker: botsort.yaml  # tracker type, ['botsort.yaml', 'bytetrack.yaml', 'deepocsort.yaml', 'hybirdsort.yaml']
 reid_weight: /workspace/cv-docker/joey04.li/datasets/yolo_tracking/examples/weights/osnet_x1_0_imagenet.pt  # reid model weight path
+grid_points_pos:
+grid_points_coors:

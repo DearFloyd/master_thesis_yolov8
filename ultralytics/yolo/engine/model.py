@@ -1,6 +1,6 @@
 # Ultralytics YOLO 🚀, AGPL-3.0 license
 
-import sys, torch, os
+import sys, torch, os, yaml
 from pathlib import Path
 from typing import Union
 
@@ -245,6 +245,11 @@ class YOLO:
         if verbose_path != None:
             if os.path.exists(verbose_path):
                 os.remove(verbose_path)
+
+        with open(overrides['grid_points_pos'], 'r', encoding='utf-8') as f:
+            result = yaml.load(f.read(), Loader=yaml.FullLoader)
+            overrides['grid_points_coors'] = result['coors']
+
         if not is_cli:
             overrides['save'] = kwargs.get('save', False)  # do not save by default if called in Python
         if not self.predictor:
