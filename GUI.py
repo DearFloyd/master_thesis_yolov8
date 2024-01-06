@@ -108,6 +108,18 @@ def make_plot_00_15(plot_type):
         c1 = base.mark_arc(outerRadius=160, stroke="#fff")
         c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
         return c1 + c2
+    
+    elif plot_type == "grid_split_pie":
+        outputpath_radial = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/sp1/area_radial_6.csv'
+        mean_ratio_radio_source = pd.read_csv(outputpath_radial)
+        base = alt.Chart(mean_ratio_radio_source, title="0-15分钟片段-区域6").encode(
+                theta=alt.Theta("count:Q", stack=True),
+                # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                color="state:N",
+            )
+        c1 = base.mark_arc(outerRadius=160, stroke="#fff")
+        c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
+        return c1 + c2
 
 
 def make_plot_15_30(plot_type):
@@ -189,6 +201,18 @@ def make_plot_30_45(plot_type):
     elif plot_type == "radial":
         mean_ratio_radio_source = pd.read_csv(outputpath_radial)
         base = alt.Chart(mean_ratio_radio_source, title="30-45分钟片段").encode(
+                theta=alt.Theta("count:Q", stack=True),
+                # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                color="state:N",
+            )
+        c1 = base.mark_arc(outerRadius=160, stroke="#fff")
+        c2 = base.mark_text(radius=190, size=10).encode(text="count:Q")
+        return c1 + c2
+    
+    elif plot_type == "grid_split_pie":
+        outputpath_radial = '/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/detect/sp3/area_radial_6.csv'
+        mean_ratio_radio_source = pd.read_csv(outputpath_radial)
+        base = alt.Chart(mean_ratio_radio_source, title="30-45分钟片段-区域6").encode(
                 theta=alt.Theta("count:Q", stack=True),
                 # radius=alt.Radius("state", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
                 color="state:N",
@@ -337,7 +361,8 @@ if __name__ == "__main__":
         button = gr.Radio(label="Plot type",
                           choices=[#'mutiline',
                                    #'bar_chart',
-                                   'radial'], value='radial')
+                                   'radial',
+                                   'grid_split_pie'], value='grid_split_pie')
         plot1 = gr.Plot(label="Plot")
         plot2 = gr.Plot(label="Plot")
         plot3 = gr.Plot(label="Plot")
@@ -346,18 +371,18 @@ if __name__ == "__main__":
         plot6 = gr.Plot(label="Plot")
 
         button.change(make_plot_00_15, inputs=button, outputs=[plot1])
-        button.change(make_plot_15_30, inputs=button, outputs=[plot2])
+        # button.change(make_plot_15_30, inputs=button, outputs=[plot2])
         button.change(make_plot_30_45, inputs=button, outputs=[plot3])
-        button.change(make_plot_45_60, inputs=button, outputs=[plot4])
-        button.change(make_plot_60_75, inputs=button, outputs=[plot5])
-        button.change(make_plot_75_90, inputs=button, outputs=[plot6])
+        # button.change(make_plot_45_60, inputs=button, outputs=[plot4])
+        # button.change(make_plot_60_75, inputs=button, outputs=[plot5])
+        # button.change(make_plot_75_90, inputs=button, outputs=[plot6])
 
         demo.load(make_plot_00_15, inputs=[button], outputs=[plot1])
-        demo.load(make_plot_15_30, inputs=[button], outputs=[plot2])
+        # demo.load(make_plot_15_30, inputs=[button], outputs=[plot2])
         demo.load(make_plot_30_45, inputs=[button], outputs=[plot3])
-        demo.load(make_plot_45_60, inputs=[button], outputs=[plot4])
-        demo.load(make_plot_60_75, inputs=[button], outputs=[plot5])
-        demo.load(make_plot_75_90, inputs=[button], outputs=[plot6])
+        # demo.load(make_plot_45_60, inputs=[button], outputs=[plot4])
+        # demo.load(make_plot_60_75, inputs=[button], outputs=[plot5])
+        # demo.load(make_plot_75_90, inputs=[button], outputs=[plot6])
         #Blocks特有组件，设置所有子组件按水平排列
         with gr.Row():
             image_input = gr.Image(sources='upload')
